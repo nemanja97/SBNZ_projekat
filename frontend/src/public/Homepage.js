@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { TileLayer, Popup, Marker, Map } from "react-leaflet";
+import React, { useState, useEffect } from "react";
 import Navbar from "../shared/Navbar";
 import Filters from "../shared/Filters";
+import { PropertyService } from "../services/PropertyService";
+import { PlacesOfInterestService } from "../services/PlacesOfInterestService";
+import LeafletMap from "../shared/LeafletMap";
 
 function HomePage() {
   const [map, setMap] = useState({
@@ -9,6 +11,10 @@ function HomePage() {
     longitude: 19.8369,
     zoom: 13,
   });
+
+  const [properties, setProperties] = useState()
+
+  const [placesOfInterest, setPlacesOfInterest] = useState()
 
   const [propertyFilters, setPropertyFilters] = useState({
     priceLow: '',
@@ -38,6 +44,20 @@ function HomePage() {
     console.log(propertyFilters);
     console.log(personalFilters);
   };
+
+  useEffect(() => {
+    async function fetchProperties() {
+      const response = await PropertyService.getAll();
+      setProperties(response.data);
+    }
+    async function fetchPlacesOfInterest() {
+      const response = await PlacesOfInterestService.getAll();
+      setPlacesOfInterest(response.data);
+    }
+
+    fetchProperties();
+    fetchPlacesOfInterest();
+  })
 
   return (
     <>
@@ -71,17 +91,15 @@ function HomePage() {
             minHeight: "95vh",
           }}
         >
-          <Map center={[map.latitude, map.longitude]} zoom={map.zoom}>
-            <TileLayer
-              attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={[map.latitude, map.longitude]}>
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-            </Marker>
-          </Map>
+          <LeafletMap
+            map={map}
+            handleMapChange={setMap}
+            
+            properties={properties}
+            handlePropertiesChange={setProperties}
+            
+            placesOfInterest={placesOfInterest}
+            handleplacesOfInterestChange={setPlacesOfInterest}/>
         </div>
       </div>
     </>

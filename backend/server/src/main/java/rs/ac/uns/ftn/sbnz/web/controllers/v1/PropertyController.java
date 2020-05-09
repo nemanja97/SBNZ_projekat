@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "api/properties")
+@RequestMapping(value = "api/v1/properties")
 @CrossOrigin
 public class PropertyController {
 

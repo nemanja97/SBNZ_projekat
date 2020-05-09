@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "api/placesOfInterest")
+@RequestMapping(value = "api/v1/placesOfInterest")
 @CrossOrigin
 public class PlaceOfInterestController {
 
@@ -53,7 +53,7 @@ public class PlaceOfInterestController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> updatePlaceOfInterest(@PathVariable Long id) {
+    public ResponseEntity<Object> deletePlaceOfInterest(@PathVariable Long id) {
         placeOfInterestService.removePlaceOfInterest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

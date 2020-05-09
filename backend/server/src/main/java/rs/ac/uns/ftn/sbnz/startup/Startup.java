@@ -33,6 +33,7 @@ public class Startup implements ApplicationRunner {
 //        user.setPassword("admin");
 //        user.setRole(Role.ROLE_ADMIN);
 //        userService.registerAUser(user);
+//
 //        Property property_1 = new Property();
 //        property_1.setCoordinate(new Coordinate(45.02, 25.6));
 //        property_1.setPrice(5000);
@@ -42,6 +43,7 @@ public class Startup implements ApplicationRunner {
 //        property_1.setHeating(Heating.BOILER);
 //        property_1.setAllowedPets(Set.of(PetStatus.CATS, PetStatus.DOGS, PetStatus.IN_AQUARIUM, PetStatus.IN_TERRARIUM));
 //        property_1.setAmenities(Set.of(Amenity.AIR_CONDITIONING, Amenity.CABLE_READY, Amenity.HIGH_SPEED_INTERNET_ACCESS, Amenity.ELEVATOR));
+//        property_1.setStatus(PropertyStatus.FOR_SALE);
 //
 //        Property property_2 = new Property();
 //        property_2.setCoordinate(new Coordinate(46.02, 35.6));
@@ -52,6 +54,7 @@ public class Startup implements ApplicationRunner {
 //        property_2.setHeating(Heating.RADIANT);
 //        property_2.setAllowedPets(Set.of(PetStatus.CATS, PetStatus.DOGS));
 //        property_2.setAmenities(Set.of(Amenity.GATED, Amenity.GARAGE, Amenity.HIGH_SPEED_INTERNET_ACCESS, Amenity.ELEVATOR));
+//        property_2.setStatus(PropertyStatus.FOR_SALE);
 //
 //        List<Property> properties = Arrays.asList(
 //                property_1,

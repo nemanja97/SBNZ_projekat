@@ -19,7 +19,7 @@ import rs.ac.uns.ftn.sbnz.web.dto.v1.LoginDTO;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/auth")
+@RequestMapping(value = "/api/v1/auth")
 @CrossOrigin
 public class AuthController {
 

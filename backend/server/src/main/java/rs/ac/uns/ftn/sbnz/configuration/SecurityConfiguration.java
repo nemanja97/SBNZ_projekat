@@ -56,11 +56,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests().
                 antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll().
-                antMatchers("/api/auth").permitAll().
-                antMatchers(HttpMethod.GET, "/api/properties").permitAll().
-                antMatchers(HttpMethod.GET, "/api/properties/*").permitAll().
-                antMatchers(HttpMethod.GET, "/api/placesOfInterest").permitAll().
-                antMatchers(HttpMethod.GET, "/api/placesOfInterest/*").permitAll().
+                antMatchers("/api/v1/auth").permitAll().
+                antMatchers(HttpMethod.GET, "/api/v1/properties").permitAll().
+                antMatchers(HttpMethod.GET, "/api/v1/properties/*").permitAll().
+                antMatchers(HttpMethod.GET, "/api/v1/placesOfInterest").permitAll().
+                antMatchers(HttpMethod.GET, "/api/v1/placesOfInterest/*").permitAll().
                 anyRequest().authenticated()
                 .and().cors();
         http.addFilterBefore(jwtAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
