@@ -1,7 +1,5 @@
 package rs.ac.uns.ftn.sbnz.web.dto.v1;
 
-import lombok.Getter;
-import lombok.Setter;
 import rs.ac.uns.ftn.sbnz.models.*;
 import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
 import rs.ac.uns.ftn.sbnz.models.enums.Heating;
@@ -12,8 +10,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Set;
 
-@Getter
-@Setter
 public class PropertyDTO {
 
     private Long id;
@@ -107,4 +103,85 @@ public class PropertyDTO {
         property.setAmenities(this.amenities);
         return property;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public int getNumberOfBeds() {
+		return numberOfBeds;
+	}
+
+	public void setNumberOfBeds(int numberOfBeds) {
+		this.numberOfBeds = numberOfBeds;
+	}
+
+	public int getNumberOfBathrooms() {
+		return numberOfBathrooms;
+	}
+
+	public void setNumberOfBathrooms(int numberOfBathrooms) {
+		this.numberOfBathrooms = numberOfBathrooms;
+	}
+
+	public Heating getHeating() {
+		return heating;
+	}
+
+	public void setHeating(Heating heating) {
+		this.heating = heating;
+	}
+
+	public PropertyStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(PropertyStatus status) {
+		this.status = status;
+	}
+
+	public Set<PetStatus> getAllowedPets() {
+		return allowedPets;
+	}
+
+	public void setAllowedPets(Set<PetStatus> allowedPets) {
+		this.allowedPets = allowedPets;
+	}
+
+	public Set<Amenity> getAmenities() {
+		return amenities;
+	}
+
+	public void setAmenities(Set<Amenity> amenities) {
+		this.amenities = amenities;
+	}
+    
 }

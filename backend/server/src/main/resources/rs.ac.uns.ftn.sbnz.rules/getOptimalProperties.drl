@@ -1,0 +1,13 @@
+package rs.ac.uns.ftn.sbnz.rules
+
+import rs.ac.uns.ftn.sbnz.models.drools.*
+import rs.ac.uns.ftn.sbnz.models.Property
+import java.util.List;
+
+rule "Find optimal properties"
+    when
+        $ps: Property(price < 100000)
+    then
+        System.out.println("a");
+        System.out.println(String.format("Price: %s", $ps.getPrice()));
+end

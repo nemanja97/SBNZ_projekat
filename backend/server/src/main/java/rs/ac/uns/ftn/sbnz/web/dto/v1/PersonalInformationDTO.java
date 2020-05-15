@@ -1,14 +1,10 @@
 package rs.ac.uns.ftn.sbnz.web.dto.v1;
 
-import lombok.Getter;
-import lombok.Setter;
 import rs.ac.uns.ftn.sbnz.models.enums.Interest;
 
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-@Getter
-@Setter
 public class PersonalInformationDTO {
 
     private List<@PositiveOrZero(message = "Ages must be positive numbers") Integer> occupantAges;
@@ -26,4 +22,37 @@ public class PersonalInformationDTO {
         this.hasVehicle = hasVehicle;
         this.interests = interests;
     }
+
+	public List<Integer> getOccupantAges() {
+		return occupantAges;
+	}
+
+	public void setOccupantAges(List<Integer> occupantAges) {
+		this.occupantAges = occupantAges;
+	}
+
+	public Boolean getExpectingChildren() {
+		return expectingChildren;
+	}
+
+	public void setExpectingChildren(Boolean expectingChildren) {
+		this.expectingChildren = expectingChildren;
+	}
+
+	public Boolean getHasVehicle() {
+		return hasVehicle;
+	}
+
+	public void setHasVehicle(Boolean hasVehicle) {
+		this.hasVehicle = hasVehicle;
+	}
+
+	public List<Interest> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<Interest> interests) {
+		this.interests = interests;
+	}
+    
 }

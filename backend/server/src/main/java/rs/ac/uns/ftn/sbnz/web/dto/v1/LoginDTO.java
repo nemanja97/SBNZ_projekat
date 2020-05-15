@@ -1,13 +1,8 @@
 package rs.ac.uns.ftn.sbnz.web.dto.v1;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@Setter
 public class LoginDTO {
 
     @Email(message = "Email must be in correct format")
@@ -25,4 +20,21 @@ public class LoginDTO {
         this.email = email;
         this.password = password;
     }
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+    
 }
