@@ -1,7 +1,5 @@
 package rs.ac.uns.ftn.sbnz.web.dto.v1;
 
-import lombok.Getter;
-import lombok.Setter;
 import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
 import rs.ac.uns.ftn.sbnz.models.enums.Heating;
 import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
@@ -9,8 +7,6 @@ import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-@Getter
-@Setter
 public class PropertyInformationDTO {
 
     @PositiveOrZero(message = "Min price must be positive")
@@ -61,4 +57,93 @@ public class PropertyInformationDTO {
         this.pets = pets;
         this.amenities = amenities;
     }
+
+	public int getPriceLow() {
+		return priceLow;
+	}
+
+	public void setPriceLow(int priceLow) {
+		this.priceLow = priceLow;
+	}
+
+	public int getPriceHigh() {
+		return priceHigh;
+	}
+
+	public void setPriceHigh(int priceHigh) {
+		this.priceHigh = priceHigh;
+	}
+
+	public int getSizeLow() {
+		return sizeLow;
+	}
+
+	public void setSizeLow(int sizeLow) {
+		this.sizeLow = sizeLow;
+	}
+
+	public int getSizeHigh() {
+		return sizeHigh;
+	}
+
+	public void setSizeHigh(int sizeHigh) {
+		this.sizeHigh = sizeHigh;
+	}
+
+	public int getBedsLow() {
+		return bedsLow;
+	}
+
+	public void setBedsLow(int bedsLow) {
+		this.bedsLow = bedsLow;
+	}
+
+	public int getBedsHigh() {
+		return bedsHigh;
+	}
+
+	public void setBedsHigh(int bedsHigh) {
+		this.bedsHigh = bedsHigh;
+	}
+
+	public int getBathroomsLow() {
+		return bathroomsLow;
+	}
+
+	public void setBathroomsLow(int bathroomsLow) {
+		this.bathroomsLow = bathroomsLow;
+	}
+
+	public int getBathroomsHigh() {
+		return bathroomsHigh;
+	}
+
+	public void setBathroomsHigh(int bathroomsHigh) {
+		this.bathroomsHigh = bathroomsHigh;
+	}
+
+	public List<Heating> getHeating() {
+		return heating;
+	}
+
+	public void setHeating(List<Heating> heating) {
+		this.heating = heating;
+	}
+
+	public List<PetStatus> getPets() {
+		return pets;
+	}
+
+	public void setPets(List<PetStatus> pets) {
+		this.pets = pets;
+	}
+
+	public List<Amenity> getAmenities() {
+		return amenities;
+	}
+
+	public void setAmenities(List<Amenity> amenities) {
+		this.amenities = amenities;
+	}
+    
 }

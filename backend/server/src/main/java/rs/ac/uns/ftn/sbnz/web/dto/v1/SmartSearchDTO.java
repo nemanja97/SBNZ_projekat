@@ -1,13 +1,9 @@
 package rs.ac.uns.ftn.sbnz.web.dto.v1;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
 public class SmartSearchDTO {
 
     @Valid
@@ -26,4 +22,21 @@ public class SmartSearchDTO {
         this.personalInformation = personalInformation;
         this.propertyInformation = propertyInformation;
     }
+
+	public PersonalInformationDTO getPersonalInformation() {
+		return personalInformation;
+	}
+
+	public void setPersonalInformation(PersonalInformationDTO personalInformation) {
+		this.personalInformation = personalInformation;
+	}
+
+	public PropertyInformationDTO getPropertyInformation() {
+		return propertyInformation;
+	}
+
+	public void setPropertyInformation(PropertyInformationDTO propertyInformation) {
+		this.propertyInformation = propertyInformation;
+	}
+    
 }

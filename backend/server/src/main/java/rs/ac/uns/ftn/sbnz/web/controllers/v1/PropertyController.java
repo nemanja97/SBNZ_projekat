@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rs.ac.uns.ftn.sbnz.models.MultimediaFile;
 import rs.ac.uns.ftn.sbnz.models.Property;
+import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
 import rs.ac.uns.ftn.sbnz.service.FileStorageService;
 import rs.ac.uns.ftn.sbnz.service.MultimediaFileService;
 import rs.ac.uns.ftn.sbnz.service.PropertyService;
 import rs.ac.uns.ftn.sbnz.web.dto.v1.PropertyDTO;
+import rs.ac.uns.ftn.sbnz.web.dto.v1.SmartSearchDTO;
 import rs.ac.uns.ftn.sbnz.web.dto.v1.UploadFileResponseDTO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +46,15 @@ public class PropertyController {
     public ResponseEntity<List<PropertyDTO>> getProperties() {
         List<Property> properties = propertyService.getProperties();
         List<PropertyDTO> propertyDTOS = properties.stream().map(PropertyDTO::new).collect(Collectors.toList());
+
+        return new ResponseEntity<>(propertyDTOS, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/optimal", method = RequestMethod.GET)
+    public ResponseEntity<List<PropertyDTO>> getOptimalProperties() {
+    	ScoredProperties optimalProperties = propertyService.getOptimalProperties(null);
+        List<PropertyDTO> propertyDTOS = optimalProperties.getPropertyWithScores().stream().map
+        		(p -> new PropertyDTO(p.getProperty())).collect(Collectors.toList());
 
         return new ResponseEntity<>(propertyDTOS, HttpStatus.OK);
     }
