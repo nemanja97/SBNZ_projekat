@@ -1,11 +1,11 @@
-package rs.ac.uns.ftn.sbnz.web.dto.v1;
+package rs.ac.uns.ftn.sbnz.models.drools;
 
 import rs.ac.uns.ftn.sbnz.models.enums.Interest;
 
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-public class PersonalInformationDTO {
+public class PersonalInformation {
 
 	@PositiveOrZero
 	private int youngerOccupants;
@@ -17,12 +17,12 @@ public class PersonalInformationDTO {
 	private Boolean hasVehicle;
 	private List<Interest> interests;
 
-	public PersonalInformationDTO() {
+	public PersonalInformation() {
 	}
 
-	public PersonalInformationDTO(@PositiveOrZero int youngerOccupants, @PositiveOrZero int middleAgedOccupants,
-								  @PositiveOrZero int olderOccupants, Boolean expectingChildren,
-								  Boolean hasVehicle, List<Interest> interests) {
+	public PersonalInformation(@PositiveOrZero int youngerOccupants, @PositiveOrZero int middleAgedOccupants,
+							   @PositiveOrZero int olderOccupants, Boolean expectingChildren,
+							   Boolean hasVehicle, List<Interest> interests) {
 		this.youngerOccupants = youngerOccupants;
 		this.middleAgedOccupants = middleAgedOccupants;
 		this.olderOccupants = olderOccupants;

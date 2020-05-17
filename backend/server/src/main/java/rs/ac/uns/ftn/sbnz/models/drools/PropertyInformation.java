@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.sbnz.web.dto.v1;
+package rs.ac.uns.ftn.sbnz.models.drools;
 
 import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
 import rs.ac.uns.ftn.sbnz.models.enums.Heating;
@@ -7,7 +7,7 @@ import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-public class PropertyInformationDTO {
+public class PropertyInformation {
 
     @PositiveOrZero(message = "Min price must be positive")
     private int priceLow;
@@ -33,18 +33,18 @@ public class PropertyInformationDTO {
     private List<PetStatus> pets;
     private List<Amenity> amenities;
 
-    public PropertyInformationDTO() {
+    public PropertyInformation() {
     }
 
-    public PropertyInformationDTO(@PositiveOrZero(message = "Min price must be positive") int priceLow,
-                                  @PositiveOrZero(message = "Max price must be positive") int priceHigh,
-                                  @PositiveOrZero(message = "Max property size must be positive") int sizeLow,
-                                  @PositiveOrZero(message = "Max property size must be positive") int sizeHigh,
-                                  @PositiveOrZero(message = "Min number of beds must be positive") int bedsLow,
-                                  @PositiveOrZero(message = "Max number of beds must be positive") int bedsHigh,
-                                  @PositiveOrZero(message = "Max number of bathrooms must be positive") int bathroomsLow,
-                                  @PositiveOrZero(message = "Max number of bathrooms must be positive") int bathroomsHigh,
-                                  List<Heating> heating, List<PetStatus> pets, List<Amenity> amenities) {
+    public PropertyInformation(@PositiveOrZero(message = "Min price must be positive") int priceLow,
+							   @PositiveOrZero(message = "Max price must be positive") int priceHigh,
+							   @PositiveOrZero(message = "Max property size must be positive") int sizeLow,
+							   @PositiveOrZero(message = "Max property size must be positive") int sizeHigh,
+							   @PositiveOrZero(message = "Min number of beds must be positive") int bedsLow,
+							   @PositiveOrZero(message = "Max number of beds must be positive") int bedsHigh,
+							   @PositiveOrZero(message = "Max number of bathrooms must be positive") int bathroomsLow,
+							   @PositiveOrZero(message = "Max number of bathrooms must be positive") int bathroomsHigh,
+							   List<Heating> heating, List<PetStatus> pets, List<Amenity> amenities) {
         this.priceLow = priceLow;
         this.priceHigh = priceHigh;
         this.sizeLow = sizeLow;

@@ -4,6 +4,7 @@ import Filters from "../shared/Filters";
 import { PropertyService } from "../services/PropertyService";
 import { PlacesOfInterestService } from "../services/PlacesOfInterestService";
 import LeafletMap from "../shared/LeafletMap";
+import qs from "querystring"
 
 function HomePage() {
   const [map, setMap] = useState({
@@ -41,8 +42,11 @@ function HomePage() {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    console.log(propertyFilters);
-    console.log(personalFilters);
+    const smartSearch = {
+      ...propertyFilters,
+      ...personalFilters,
+    }
+    window.open("/results?" + qs.stringify(smartSearch), '_blank')
   };
 
   useEffect(() => {
@@ -57,7 +61,7 @@ function HomePage() {
 
     fetchProperties();
     fetchPlacesOfInterest();
-  })
+  }, [])
 
   return (
     <>

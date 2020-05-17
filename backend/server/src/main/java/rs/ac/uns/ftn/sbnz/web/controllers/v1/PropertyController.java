@@ -11,12 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rs.ac.uns.ftn.sbnz.models.MultimediaFile;
 import rs.ac.uns.ftn.sbnz.models.Property;
+import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
 import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
+import rs.ac.uns.ftn.sbnz.models.drools.SmartSearch;
+import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
+import rs.ac.uns.ftn.sbnz.models.enums.Heating;
+import rs.ac.uns.ftn.sbnz.models.enums.Interest;
+import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
 import rs.ac.uns.ftn.sbnz.service.FileStorageService;
 import rs.ac.uns.ftn.sbnz.service.MultimediaFileService;
 import rs.ac.uns.ftn.sbnz.service.PropertyService;
 import rs.ac.uns.ftn.sbnz.web.dto.v1.PropertyDTO;
-import rs.ac.uns.ftn.sbnz.web.dto.v1.SmartSearchDTO;
 import rs.ac.uns.ftn.sbnz.web.dto.v1.UploadFileResponseDTO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,8 +57,26 @@ public class PropertyController {
     }
     
     @RequestMapping(value = "/optimal", method = RequestMethod.GET)
-    public ResponseEntity<List<PropertyDTO>> getOptimalProperties() {
-    	ScoredProperties optimalProperties = propertyService.getOptimalProperties(null);
+    public ResponseEntity<List<PropertyDTO>> getOptimalProperties(
+            @RequestParam(value = "priceLow", required = false, defaultValue = "0") int priceLow , @RequestParam(value = "priceHigh", required = false, defaultValue = "2147483647") int priceHigh,
+            @RequestParam(value = "sizeLow", required = false, defaultValue = "0") int sizeLow, @RequestParam(value = "sizeHigh", required = false, defaultValue = "2147483647") int sizeHigh,
+            @RequestParam(value = "bedsLow", required = false, defaultValue = "0") int bedsLow, @RequestParam(value = "bedsHigh", required = false, defaultValue = "2147483647") int bedsHigh,
+            @RequestParam(value = "bathroomsLow", required = false, defaultValue = "0") int bathroomsLow, @RequestParam(value = "bathroomsHigh", required = false, defaultValue = "2147483647") int bathroomsHigh,
+            @RequestParam(value = "heating", required = false, defaultValue = "FURNACE,BOILER,HEAT_PUMP,HYBRID,DUCTLESS_MINI_SPLITS,RADIANT") List<Heating> heating,
+            @RequestParam(value = "pets", required = false, defaultValue = "") List<PetStatus> pets,
+            @RequestParam(value = "amenities", required = false, defaultValue = "") List<Amenity> amenities,
+            @RequestParam(value = "interests", required = false, defaultValue = "") List<Interest> interests,
+            @RequestParam(value = "youngerOccupants", required = false, defaultValue = "0") int youngerOccupants,
+            @RequestParam(value = "middleAgedOccupants", required = false, defaultValue = "0") int middleAgedOccupants,
+            @RequestParam(value = "olderOccupants", required = false, defaultValue = "0") int olderOccupants,
+            @RequestParam(value = "expectingChildren", required = false, defaultValue = "false") boolean expectingChildren,
+            @RequestParam(value = "hasVehicle", required = false, defaultValue = "false") boolean hasVehicle
+    ) {
+        SmartSearch smartSearch = new SmartSearch(
+                new PersonalInformation(youngerOccupants, middleAgedOccupants, olderOccupants, expectingChildren, hasVehicle, interests),
+                new PropertyInformation(priceLow, priceHigh, sizeLow, sizeHigh, bedsLow, bedsHigh, bathroomsLow, bathroomsHigh, heating, pets, amenities)
+        );
+    	ScoredProperties optimalProperties = propertyService.getOptimalProperties(smartSearch);
         List<PropertyDTO> propertyDTOS = optimalProperties.getPropertyWithScores().stream().map
         		(p -> new PropertyDTO(p.getProperty())).collect(Collectors.toList());
 

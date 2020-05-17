@@ -5,9 +5,9 @@ import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
 import rs.ac.uns.ftn.sbnz.models.*;
 import rs.ac.uns.ftn.sbnz.models.Property;
 import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
-import rs.ac.uns.ftn.sbnz.web.dto.v1.SmartSearchDTO;
-import rs.ac.uns.ftn.sbnz.web.dto.v1.PropertyInformationDTO;
-import rs.ac.uns.ftn.sbnz.web.dto.v1.PersonalInformationDTO;
+import rs.ac.uns.ftn.sbnz.models.drools.SmartSearch;
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
+import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
 import rs.ac.uns.ftn.sbnz.models.enums.Interest;
 import rs.ac.uns.ftn.sbnz.models.enums.Heating;
 import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
@@ -29,7 +29,7 @@ rule "Calculate kindergarten distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getKindergartenScale();
         else
-            score += 1 / distance * $ps.getScaler().getKindergartenScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getKindergartenScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -49,7 +49,7 @@ rule "Calculate school distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getSchoolScale();
         else
-            score += 1 / distance * $ps.getScaler().getSchoolScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getSchoolScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -69,7 +69,7 @@ rule "Calculate university distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getUniversityScale();
         else
-            score += 1 / distance * $ps.getScaler().getUniversityScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getUniversityScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -89,7 +89,7 @@ rule "Calculate hospital distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getHospitalScale();
         else
-            score += 1 / distance * $ps.getScaler().getHospitalScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getHospitalScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -109,7 +109,7 @@ rule "Calculate bank distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getBankScale();
         else
-            score += 1 / distance * $ps.getScaler().getBankScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getBankScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -129,7 +129,7 @@ rule "Calculate park distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getParkScale();
         else
-            score += 1 / distance * $ps.getScaler().getParkScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getParkScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -149,7 +149,7 @@ rule "Calculate gym distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getGymScale();
         else
-            score += 1 / distance * $ps.getScaler().getGymScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getGymScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -169,7 +169,7 @@ rule "Calculate restaurant distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getRestaurantScale();
         else
-            score += 1 / distance * $ps.getScaler().getRestaurantScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getRestaurantScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -189,7 +189,7 @@ rule "Calculate theater distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getTheaterScale();
         else
-            score += 1 / distance * $ps.getScaler().getTheaterScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getTheaterScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -209,7 +209,7 @@ rule "Calculate cinema distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getCinemaScale();
         else
-            score += 1 / distance * $ps.getScaler().getCinemaScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getCinemaScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -229,7 +229,7 @@ rule "Calculate supermarket distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getSupermarketScale();
         else
-            score += 1 / distance * $ps.getScaler().getSupermarketScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getSupermarketScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -249,7 +249,7 @@ rule "Calculate shopping center distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getShoppingCenterScale();
         else
-            score += 1 / distance * $ps.getScaler().getShoppingCenterScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getShoppingCenterScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));
@@ -269,7 +269,7 @@ rule "Calculate night club distance score" salience 1
         if (distance < $ps.getScaler().getNearbyDistanceFactor())
             score += 1 * $ps.getScaler().getNightClubScale();
         else
-            score += 1 / distance * $ps.getScaler().getNightClubScale();
+            score += $ps.getScaler().getNearbyDistanceFactor() / distance * $ps.getScaler().getNightClubScale();
 
         $ps.setScore($ps.getScore() + score);
         System.out.println(String.format("Score for %s is %s \n", $ps.getProperty().getId(), $ps.getScore()));

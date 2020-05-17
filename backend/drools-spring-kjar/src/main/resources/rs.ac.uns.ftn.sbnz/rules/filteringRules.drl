@@ -5,9 +5,9 @@ import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
 import rs.ac.uns.ftn.sbnz.models.*;
 import rs.ac.uns.ftn.sbnz.models.Property;
 import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
-import rs.ac.uns.ftn.sbnz.web.dto.v1.SmartSearchDTO;
-import rs.ac.uns.ftn.sbnz.web.dto.v1.PropertyInformationDTO;
-import rs.ac.uns.ftn.sbnz.web.dto.v1.PersonalInformationDTO;
+import rs.ac.uns.ftn.sbnz.models.drools.SmartSearch;
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
+import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
 import rs.ac.uns.ftn.sbnz.models.enums.Interest;
 import rs.ac.uns.ftn.sbnz.models.enums.Heating;
 import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
@@ -19,7 +19,7 @@ import java.util.List;
 
 rule "Filter properties" salience 3
     when
-        $ss: SmartSearchDTO();
+        $ss: SmartSearch();
         $sp: ScoredProperties();
         $p: Property(
             $id: id,
