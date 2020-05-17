@@ -1,0 +1,26 @@
+package rs.ac.uns.ftn.sbnz.rules
+
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyWithScore;
+import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
+import rs.ac.uns.ftn.sbnz.models.*;
+import rs.ac.uns.ftn.sbnz.models.Property;
+import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
+import rs.ac.uns.ftn.sbnz.web.dto.v1.SmartSearchDTO;
+import rs.ac.uns.ftn.sbnz.web.dto.v1.PropertyInformationDTO;
+import rs.ac.uns.ftn.sbnz.web.dto.v1.PersonalInformationDTO;
+import rs.ac.uns.ftn.sbnz.models.enums.Interest;
+import rs.ac.uns.ftn.sbnz.models.enums.Heating;
+import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
+import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
+
+import java.util.List;
+
+rule "Add to return list" salience 0
+    when
+        $ps: PropertyWithScore();
+        $sp: ScoredProperties();
+    then
+        System.out.println(String.format("Adding: %s", $ps.getProperty().getId()));
+        $sp.getPropertyWithScores().add($ps);
+end

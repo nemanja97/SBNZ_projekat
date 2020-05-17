@@ -40,6 +40,13 @@ public class PlaceOfInterest {
 	public void setTypeOfPlace(TypeOfPlace typeOfPlace) {
 		this.typeOfPlace = typeOfPlace;
 	}
-    
+
+	public double calculateDistance(Property other) {
+		return this.coordinate.calculateDistance(other.getCoordinate());
+	}
+
+	public double calculateDistance(PlaceOfInterest other) {
+		return this.coordinate.calculateDistance(other.getCoordinate());
+	}
     
 }

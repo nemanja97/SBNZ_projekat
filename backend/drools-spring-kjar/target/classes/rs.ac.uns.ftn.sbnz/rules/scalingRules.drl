@@ -1,0 +1,207 @@
+package rs.ac.uns.ftn.sbnz.rules
+
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyWithScore;
+import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
+import rs.ac.uns.ftn.sbnz.models.*;
+import rs.ac.uns.ftn.sbnz.models.Property;
+import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
+import rs.ac.uns.ftn.sbnz.web.dto.v1.SmartSearchDTO;
+import rs.ac.uns.ftn.sbnz.web.dto.v1.PropertyInformationDTO;
+import rs.ac.uns.ftn.sbnz.web.dto.v1.PersonalInformationDTO;
+import rs.ac.uns.ftn.sbnz.models.enums.Interest;
+import rs.ac.uns.ftn.sbnz.models.enums.Heating;
+import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
+import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
+
+import java.util.List;
+
+rule "Has vehicle" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Has vehicle");
+        $ss: SmartSearchDTO(personalInformation.getHasVehicle() == true);
+    then
+        System.out.println(String.format("Vehicle possession properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setNearbyDistanceFactor(10.0);
+        $ps.getScaler().getFiredRules().add("Has vehicle");
+        update($ps);
+end
+
+rule "Expecting kids" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Expecting kids");
+        $ss: SmartSearchDTO(personalInformation.getExpectingChildren() == true);
+   then
+        System.out.println(String.format("Expecting a child properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setHospitalScale(
+            $ps.getScaler().getHospitalScale() + 1.5
+        );
+        $ps.getScaler().setKindergartenScale(
+            $ps.getScaler().getKindergartenScale() + 1.5
+        );
+        $ps.getScaler().setSchoolScale(
+            $ps.getScaler().getSchoolScale() + 1.5
+        );
+        $ps.getScaler().setSupermarketScale(
+            $ps.getScaler().getSupermarketScale() + 0.5
+        );
+        $ps.getScaler().getFiredRules().add("Expecting kids");
+        update($ps);
+end
+
+rule "Younger person" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Younger person");
+        $ss: SmartSearchDTO($oa: personalInformation.getYoungerOccupants() > 0);
+    then
+        System.out.println(String.format("Younger occupant properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setUniversityScale(
+            $ps.getScaler().getUniversityScale() + 0.5
+        );
+        $ps.getScaler().setNightClubScale(
+            $ps.getScaler().getNightClubScale() + 0.5
+        );
+        $ps.getScaler().setShoppingCenterScale(
+            $ps.getScaler().getShoppingCenterScale() + 0.5
+        );
+        $ps.getScaler().setHighSpeedInternetScale(
+            $ps.getScaler().getHighSpeedInternetScale() + 1.0
+        );
+        $ps.getScaler().setCableReadyScale(
+            $ps.getScaler().getCableReadyScale() + 1.0
+        );
+        $ps.getScaler().getFiredRules().add("Younger person");
+        update($ps);
+end
+
+rule "Middle aged person" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Middle aged person");
+        $ss: SmartSearchDTO($oa: personalInformation.getMiddleAgedOccupants() > 0);
+    then
+        System.out.println(String.format("Middle aged occupant properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setBankScale(
+            $ps.getScaler().getBankScale() + 0.5
+        );
+        $ps.getScaler().setRestaurantScale(
+            $ps.getScaler().getRestaurantScale() + 0.5
+        );
+        $ps.getScaler().getFiredRules().add("Middle aged person");
+        update($ps);
+end
+
+rule "Older person" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Older person");
+        $ss: SmartSearchDTO($oa: personalInformation.getOlderOccupants() > 0);
+    then
+        System.out.println(String.format("Older occupant properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setHospitalScale(
+            $ps.getScaler().getHospitalScale() + 2.5
+        );
+        $ps.getScaler().setShoppingCenterScale(
+            $ps.getScaler().getShoppingCenterScale() + 2.5
+        );
+        $ps.getScaler().setElevatorScale(
+            $ps.getScaler().getElevatorScale() + 5.0
+        );
+        $ps.getScaler().getFiredRules().add("Older person");
+        update($ps);
+end
+
+rule "Interested in food" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in food");
+        $ss: SmartSearchDTO(Interest.FOOD memberOf personalInformation.getInterests());
+   then
+        System.out.println(String.format("Food interest properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setRestaurantScale(
+            $ps.getScaler().getRestaurantScale() + 1.5
+        );
+        $ps.getScaler().getFiredRules().add("Interested in food");
+        update($ps);
+end
+
+rule "Interested in nature" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in nature");
+        $ss: SmartSearchDTO(Interest.NATURE memberOf personalInformation.getInterests());
+   then
+        System.out.println(String.format("Nature interest properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setParkScale(
+            $ps.getScaler().getParkScale() + 1.5
+        );
+        $ps.getScaler().getFiredRules().add("Interested in nature");
+        update($ps);
+end
+
+rule "Interested in sport" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in sport");
+        $ss: SmartSearchDTO(Interest.SPORT memberOf personalInformation.getInterests());
+   then
+        System.out.println(String.format("Sport interest properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setParkScale(
+            $ps.getScaler().getParkScale() + 0.75
+        );
+        $ps.getScaler().setGymScale(
+            $ps.getScaler().getGymScale() + 1.25
+        );
+        $ps.getScaler().getFiredRules().add("Interested in sport");
+        update($ps);
+end
+
+rule "Interested in culture" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in culture");
+        $ss: SmartSearchDTO(Interest.CULTURE memberOf personalInformation.getInterests());
+   then
+        System.out.println(String.format("Culture interest properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setTheaterScale(
+            $ps.getScaler().getTheaterScale() + 0.75
+        );
+        $ps.getScaler().setCinemaScale(
+            $ps.getScaler().getCinemaScale() + 1.25
+        );
+        $ps.getScaler().getFiredRules().add("Interested in culture");
+        update($ps);
+end
+
+rule "Interested in night life" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in night life");
+        $ss: SmartSearchDTO(Interest.NIGHT_LIFE memberOf personalInformation.getInterests());
+   then
+        System.out.println(String.format("Night life interest properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setNightClubScale(
+            $ps.getScaler().getNightClubScale() + 1.0
+        );
+        $ps.getScaler().getFiredRules().add("Interested in night life");
+        update($ps);
+end
+
+rule "Interested in higher price properties" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in higher price properties");
+        $ss: SmartSearchDTO(propertyInformation.sizeLow > 10000);
+   then
+        System.out.println(String.format("Higher price properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setSecurityScale(
+            $ps.getScaler().getSecurityScale() + 5.0
+        );
+        $ps.getScaler().getFiredRules().add("Interested in higher price properties");
+        update($ps);
+end
+
+rule "Interested in larger properties" salience 2
+    when
+        $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in larger properties");
+        $ss: SmartSearchDTO(propertyInformation.sizeLow > 150);
+   then
+        System.out.println(String.format("Larger size properties score scaling for %s", $ps.getProperty().getId()));
+        $ps.getScaler().setHeatingScale(
+            $ps.getScaler().getHeatingScale() + 2.0
+        );
+        $ps.getScaler().getFiredRules().add("Interested in larger properties");
+        update($ps);
+end

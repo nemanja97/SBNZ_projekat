@@ -16,6 +16,16 @@ public class Coordinate {
         this.longitude = longitude;
     }
 
+    public double calculateDistance(Coordinate other) {
+		double theta = this.longitude - other.longitude;
+		double dist = Math.sin(Math.toRadians(this.latitude)) * Math.sin(Math.toRadians(other.latitude)) +
+				Math.cos(Math.toRadians(this.latitude)) * Math.cos(Math.toRadians(other.latitude)) * Math.cos(Math.toRadians(theta));
+		dist = Math.acos(dist);
+		dist = Math.toDegrees(dist);
+		dist *= 60 * 1.1515 * 1.609344;
+		return dist;
+	}
+
 	public Double getLatitude() {
 		return latitude;
 	}

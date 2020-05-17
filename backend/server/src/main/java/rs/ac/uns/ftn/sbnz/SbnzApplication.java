@@ -21,7 +21,12 @@ public class SbnzApplication {
 
 	@Bean
 	public KieContainer kieContainer() {
-		return KieServices.Factory.get().getKieClasspathContainer();
+		KieServices ks = KieServices.Factory.get();
+		KieContainer kContainer = ks
+				.newKieContainer(ks.newReleaseId("rs.ac.uns.ftn", "drools-spring-kjar", "0.0.1-SNAPSHOT"));
+		KieScanner kScanner = ks.newKieScanner(kContainer);
+		kScanner.start(10_000);
+		return kContainer;
 	}
 
 }

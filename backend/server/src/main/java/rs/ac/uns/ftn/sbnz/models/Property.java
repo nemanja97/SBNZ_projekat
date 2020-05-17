@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.sbnz.models;
 
+import org.kie.api.definition.type.Position;
 import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
 import rs.ac.uns.ftn.sbnz.models.enums.Heating;
 import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
@@ -14,14 +15,22 @@ public class Property {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Position(0)
     private Long id;
 
     @Embedded
     private Coordinate coordinate;
 
+	@Position(1)
     private int price;
+
+	@Position(2)
     private int size;
+
+	@Position(3)
     private int numberOfBeds;
+
+	@Position(4)
     private int numberOfBathrooms;
 
     @Enumerated(EnumType.STRING)
@@ -132,6 +141,14 @@ public class Property {
 
 	public void setMultimedia(Set<MultimediaFile> multimedia) {
 		this.multimedia = multimedia;
+	}
+
+	public double calculateDistance(Property other) {
+    	return this.coordinate.calculateDistance(other.getCoordinate());
+	}
+
+	public double calculateDistance(PlaceOfInterest other) {
+    	return this.coordinate.calculateDistance(other.getCoordinate());
 	}
 
 	@Override
