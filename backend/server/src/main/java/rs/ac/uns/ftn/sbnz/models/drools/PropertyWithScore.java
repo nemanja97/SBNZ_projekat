@@ -48,11 +48,11 @@ public class PropertyWithScore implements Comparable<PropertyWithScore>, Compara
 
     @Override
     public int compare(PropertyWithScore propertyWithScore1, PropertyWithScore propertyWithScore2) {
-        return (int) (propertyWithScore1.getScore() - propertyWithScore2.getScore());
+        return (int) -(propertyWithScore1.getScore() - propertyWithScore2.getScore());
     }
 
     @Override
     public int compareTo(PropertyWithScore propertyWithScore) {
-        return (int) (this.getScore() - propertyWithScore.getScore());
+        return (int) -(this.getScore() - propertyWithScore.getScore());
     }
 }

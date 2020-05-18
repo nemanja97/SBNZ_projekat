@@ -28,12 +28,14 @@ export default function ResultsContainer(props) {
                   return (
                     <>
                       <li>
-                        <a
+                        <div
                           className="pagination-link"
                           onClick={() => handlePageClick(idx - 1)}
                         >
-                          {idx}
-                        </a>
+                          <span class="icon has-text-success">
+                            <i class="fas fa-arrow-left"></i>
+                          </span>
+                        </div>
                       </li>
                       <li>
                         <a
@@ -44,12 +46,14 @@ export default function ResultsContainer(props) {
                         </a>
                       </li>
                       <li>
-                        <a
+                        <div
                           className="pagination-link"
                           onClick={() => handlePageClick(idx + 1)}
                         >
-                          {idx + 2}
-                        </a>
+                          <span class="icon has-text-success">
+                            <i class="fas fa-arrow-right"></i>
+                          </span>
+                        </div>
                       </li>
                     </>
                   );
@@ -58,20 +62,22 @@ export default function ResultsContainer(props) {
                   return (
                     <>
                       <li>
-                        <a
+                        <div
                           className="pagination-link"
                           onClick={() => handlePageClick(idx - 1)}
                         >
-                          {idx}
-                        </a>
+                          <span class="has-text-success">
+                            <i class="fas fa-arrow-left"></i>
+                          </span>
+                        </div>
                       </li>
                       <li>
-                        <a
+                        <div
                           className="pagination-link is-primary"
                           onClick={() => handlePageClick(idx)}
                         >
                           {idx + 1}
-                        </a>
+                        </div>
                       </li>
                     </>
                   );
@@ -80,20 +86,22 @@ export default function ResultsContainer(props) {
                   return (
                     <>
                       <li>
-                        <a
+                        <div
                           className="pagination-link is-primary"
                           onClick={() => handlePageClick(idx)}
                         >
                           {idx + 1}
-                        </a>
+                        </div>
                       </li>
                       <li>
-                        <a
+                        <div
                           className="pagination-link"
                           onClick={() => handlePageClick(idx + 1)}
                         >
-                          {idx + 2}
-                        </a>
+                          <span class="icon has-text-success">
+                            <i class="fas fa-arrow-right"></i>
+                          </span>
+                        </div>
                       </li>
                     </>
                   );
