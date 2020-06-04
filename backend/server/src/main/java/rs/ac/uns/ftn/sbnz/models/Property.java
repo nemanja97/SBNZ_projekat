@@ -1,12 +1,15 @@
 package rs.ac.uns.ftn.sbnz.models;
 
 import org.kie.api.definition.type.Position;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
 import rs.ac.uns.ftn.sbnz.models.enums.Heating;
 import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
 import rs.ac.uns.ftn.sbnz.models.enums.PropertyStatus;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,6 +54,12 @@ public class Property {
 
     @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Set<MultimediaFile> multimedia;
+
+	@CreatedDate
+	private Date creationDate;
+
+	@LastModifiedDate
+	private Date modifiedDate;
 
     public Property() {
     }
@@ -109,6 +118,14 @@ public class Property {
 
 	public void setHeating(Heating heating) {
 		this.heating = heating;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
 	}
 
 	public PropertyStatus getStatus() {
