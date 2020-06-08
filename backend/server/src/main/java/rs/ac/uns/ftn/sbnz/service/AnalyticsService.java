@@ -4,6 +4,6 @@ public interface AnalyticsService {
 
     void addMoreInfoEventOnPropertyClick(Long id);
 
-    int getMoreInfoEventsForProperty(Long id);
+    int getPriceAdvice();
 
 }

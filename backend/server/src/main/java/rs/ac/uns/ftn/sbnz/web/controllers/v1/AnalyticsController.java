@@ -15,14 +15,9 @@ public class AnalyticsController {
     private AnalyticsService analyticsService;
 
     @RequestMapping(value = "/property/moreInfo/{id}", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<Object> clickedPropertyMoreInfo(@PathVariable Long id) {
+    public ResponseEntity<Object> clickedPropertyMoreInfo(@PathVariable Long id, @RequestBody(required = false) Object o) {
         analyticsService.addMoreInfoEventOnPropertyClick(id);
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @RequestMapping(value = "/property/moreInfo/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getPropertyMoreInfoAnalytics(@PathVariable Long id) {
-        return new ResponseEntity<>(analyticsService.getMoreInfoEventsForProperty(id), HttpStatus.OK);
     }
 
 }
