@@ -21,6 +21,7 @@ import java.util.List;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate kindergarten distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -38,6 +39,7 @@ rule "Calculate kindergarten distance score - LOWER" salience 1
 end
 
 rule "Calculate kindergarten distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -59,6 +61,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate school distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -76,6 +79,7 @@ rule "Calculate school distance score - LOWER" salience 1
 end
 
 rule "Calculate school distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -97,6 +101,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate university distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -114,6 +119,7 @@ rule "Calculate university distance score - LOWER" salience 1
 end
 
 rule "Calculate university distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -135,6 +141,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate hospital distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -152,6 +159,7 @@ rule "Calculate hospital distance score - LOWER" salience 1
 end
 
 rule "Calculate hospital distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -173,6 +181,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate bank distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -190,6 +199,7 @@ rule "Calculate bank distance score - LOWER" salience 1
 end
 
 rule "Calculate bank distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -211,6 +221,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate park distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -228,6 +239,7 @@ rule "Calculate park distance score - LOWER" salience 1
 end
 
 rule "Calculate park distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -249,6 +261,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate gym distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -266,6 +279,7 @@ rule "Calculate gym distance score - LOWER" salience 1
 end
 
 rule "Calculate gym distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -287,6 +301,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate restaurant distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -304,6 +319,7 @@ rule "Calculate restaurant distance score - LOWER" salience 1
 end
 
 rule "Calculate restaurant distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -325,6 +341,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate theater distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -342,6 +359,7 @@ rule "Calculate theater distance score - LOWER" salience 1
 end
 
 rule "Calculate theater distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -363,6 +381,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate cinema distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -380,6 +399,7 @@ rule "Calculate cinema distance score - LOWER" salience 1
 end
 
 rule "Calculate cinema distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -401,6 +421,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate supermarket distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -418,6 +439,7 @@ rule "Calculate supermarket distance score - LOWER" salience 1
 end
 
 rule "Calculate supermarket distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -439,6 +461,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate shopping center distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -456,6 +479,7 @@ rule "Calculate shopping center distance score - LOWER" salience 1
 end
 
 rule "Calculate shopping center distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -477,6 +501,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate night club distance score - LOWER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(
@@ -494,6 +519,7 @@ rule "Calculate night club distance score - LOWER" salience 1
 end
 
 rule "Calculate night club distance score - HIGHER" salience 1
+    agenda-group "distance_score_calculation"
     when
         $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
         $ps: PropertyWithScore(

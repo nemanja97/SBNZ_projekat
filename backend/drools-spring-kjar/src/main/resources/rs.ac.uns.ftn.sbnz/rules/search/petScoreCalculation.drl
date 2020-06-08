@@ -21,9 +21,10 @@ import java.util.List;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate pet score - CATS" salience 1
+    agenda-group "pet_score_calculation"
     when
         $ps: PropertyWithScore(
-            scaler.getFiredRules() not contains "Calculate heating score - CATS",
+            scaler.getFiredRules() not contains "Calculate pet score - CATS",
             property.getAllowedPets() contains PetStatus.CATS
          );
         $sp: ScoredProperties()
@@ -43,9 +44,10 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate pet score - BOILER" salience 1
+    agenda-group "pet_score_calculation"
     when
         $ps: PropertyWithScore(
-            scaler.getFiredRules() not contains "Calculate heating score - DOGS",
+            scaler.getFiredRules() not contains "Calculate pet score - DOGS",
             property.getAllowedPets() contains PetStatus.DOGS
          );
         $sp: ScoredProperties()
@@ -65,9 +67,10 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate pet score - IN_AQUARIUM" salience 1
+    agenda-group "pet_score_calculation"
     when
         $ps: PropertyWithScore(
-            scaler.getFiredRules() not contains "Calculate heating score - IN_AQUARIUM",
+            scaler.getFiredRules() not contains "Calculate pet score - IN_AQUARIUM",
             property.getAllowedPets() contains PetStatus.IN_AQUARIUM
          );
         $sp: ScoredProperties()
@@ -87,9 +90,10 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate pet score - IN_TERRARIUM" salience 1
+    agenda-group "pet_score_calculation"
     when
         $ps: PropertyWithScore(
-            scaler.getFiredRules() not contains "Calculate heating score - IN_TERRARIUM",
+            scaler.getFiredRules() not contains "Calculate pet score - IN_TERRARIUM",
             property.getAllowedPets() contains PetStatus.IN_TERRARIUM
          );
         $sp: ScoredProperties()

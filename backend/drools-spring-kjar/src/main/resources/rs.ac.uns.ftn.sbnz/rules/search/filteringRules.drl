@@ -16,12 +16,13 @@ import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
 
 import java.util.List;
 
-global Property property;
 
-rule "Recommend optimal price" salience 3
+rule "Filter properties" salience 3
+    agenda-group "filtering"
     when
+        $ss: SmartSearch()
         $p: Property(
-            id == 0,
+            $id: id,
             price >= $ss.propertyInformation.priceLow, price <= $ss.propertyInformation.priceHigh,
             size >= $ss.propertyInformation.sizeLow, size <= $ss.propertyInformation.sizeHigh,
             numberOfBeds >= $ss.propertyInformation.bedsLow, numberOfBeds <= $ss.propertyInformation.bedsHigh,
@@ -29,16 +30,17 @@ rule "Recommend optimal price" salience 3
             heating memberOf $ss.propertyInformation.heating,
             allowedPets.containsAll($ss.propertyInformation.pets),
             amenities.containsAll($ss.propertyInformation.amenities)
+//            allowedPets contains PetStatus() from $ss.getPropertyInformation().getPets(),
+//            amenities contains Amenity() from $ss.getPropertyInformation().getAmenities()
         )
-        $p
+//        forall ($pet: PetStatus(this memberOf $ss.getPropertyInformation().getPets())
+//            $p.getAllowedPets() contains $pet
+//        )
+//        forall ($amenity: Amenity(this memberOf of $ss.getPropertyInformation().getAmenities())
+//            $p.getAmenities() contains $amenity
+//        )
     then
 
         System.out.println(String.format("Filtered property %s", $id));
         insert(new PropertyWithScore($p));
-end
-
-query filterProperty(int size)
-
-query filterSize(int size)
-    Property(long, size;)
 end
