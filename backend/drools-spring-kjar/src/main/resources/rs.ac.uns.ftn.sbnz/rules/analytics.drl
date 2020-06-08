@@ -18,13 +18,53 @@ import java.util.List;
 
 rule "Lower property price if there is no interest in it"
     when
-        $p: Property(
-            $id: id,
-        );
-        not(
-            $ev: MoreInfoClickedEvent(id == $id)
-            over window:time(14d)
+        $p: Property($id: id)
+        not (MoreInfoClickedEvent(propertyId == $id) over window:time(14d))
+    then
+        System.out.println(String.format("No interest in %s", $p.getId()));
+end
+
+rule "Lower property price if there is low interest in it"
+    when
+        $p: Property($id: id)
+        $ev1: MoreInfoClickedEvent(propertyId == $id)
+        Number(intValue < 10) from accumulate(
+            $ev2: MoreInfoClickedEvent(
+                this != $ev1,
+                propertyId == $id
+            ) over window:time(14d),
+            count($ev2)
         )
     then
-        System.out.println(String.format("No interest in %s", $ps.getProperty().getId()));
+        System.out.println(String.format("Low interest in %s", $ev1.getPropertyId()));
+end
+
+rule "Keep property price if there is decent interest in it"
+    when
+        $p: Property($id: id)
+        $ev1: MoreInfoClickedEvent(propertyId == $id)
+        Number(intValue >= 10 && intValue <= 20) from accumulate(
+            $ev2: MoreInfoClickedEvent(
+                this != $ev1,
+                propertyId == $id
+            ) over window:time(14d),
+            count($ev2)
+        )
+    then
+        System.out.println(String.format("Decent interest in %s", $ev1.getPropertyId()));
+end
+
+rule "Increase property price if there is low interest in it"
+    when
+        $p: Property($id: id)
+        $ev1: MoreInfoClickedEvent(propertyId == $id)
+        Number(intValue > 20) from accumulate(
+            $ev2: MoreInfoClickedEvent(
+                this != $ev1,
+                propertyId == $id
+            ) over window:time(14d),
+            count($ev2)
+        )
+    then
+        System.out.println(String.format("High interest in %s", $ev1.getPropertyId()));
 end

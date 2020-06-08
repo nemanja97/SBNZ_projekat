@@ -19,8 +19,8 @@ import java.util.List;
 
 rule "Filter properties" salience 3
     when
-        $ss: SmartSearch();
-        $sp: ScoredProperties();
+        $ss: SmartSearch()
+        $sp: ScoredProperties()
         $p: Property(
             $id: id,
             price >= $ss.propertyInformation.priceLow, price <= $ss.propertyInformation.priceHigh,
@@ -30,7 +30,15 @@ rule "Filter properties" salience 3
             heating memberOf $ss.propertyInformation.heating,
             allowedPets.containsAll($ss.propertyInformation.pets),
             amenities.containsAll($ss.propertyInformation.amenities)
-        );
+//            allowedPets contains PetStatus() from $ss.getPropertyInformation().getPets(),
+//            amenities contains Amenity() from $ss.getPropertyInformation().getAmenities()
+        )
+//        forall ($pet: PetStatus(this memberOf $ss.getPropertyInformation().getPets())
+//            $p.getAllowedPets() contains $pet
+//        )
+//        forall ($amenity: Amenity(this memberOf of $ss.getPropertyInformation().getAmenities())
+//            $p.getAmenities() contains $amenity
+//        )
     then
 
         System.out.println(String.format("Filtered property %s", $id));
