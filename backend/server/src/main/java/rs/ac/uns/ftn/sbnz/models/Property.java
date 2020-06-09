@@ -3,10 +3,7 @@ package rs.ac.uns.ftn.sbnz.models;
 import org.kie.api.definition.type.Position;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
-import rs.ac.uns.ftn.sbnz.models.enums.Heating;
-import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
-import rs.ac.uns.ftn.sbnz.models.enums.PropertyStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -60,6 +57,9 @@ public class Property {
 
 	@LastModifiedDate
 	private Date modifiedDate;
+
+	@Enumerated(EnumType.STRING)
+	private PriceRecommendation priceRecommendation;
 
     public Property() {
     }
@@ -158,6 +158,14 @@ public class Property {
 
 	public void setMultimedia(Set<MultimediaFile> multimedia) {
 		this.multimedia = multimedia;
+	}
+
+	public PriceRecommendation getPriceRecommendation() {
+		return priceRecommendation;
+	}
+
+	public void setPriceRecommendation(PriceRecommendation priceRecommendation) {
+		this.priceRecommendation = priceRecommendation;
 	}
 
 	public double calculateDistance(Property other) {

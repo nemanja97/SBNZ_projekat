@@ -282,6 +282,192 @@ public class Filtering {
         assertEquals(0, rulesFired);
     }
 
+    @Test
+    public void filterProperties_HEATING() {
+        KieSession kieSession = kieContainer.getKieBase("KBase2").newKieSession();
+        kieSession.getAgenda().getAgendaGroup(agenda).setFocus();
+
+        SmartSearch smartSearch = new SmartSearch(
+                new PersonalInformation(0, 0, 0,
+                        true, true, Lists.emptyList()),
+                new PropertyInformation(0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        Lists.list(Heating.FURNACE, Heating.BOILER),
+                        Lists.emptyList(),
+                        Lists.emptyList())
+        );
+        ScoredProperties scoredProperties = new ScoredProperties(Lists.emptyList());
+
+        GetPropertiesForFiltering getPropertiesForFiltering = new GetPropertiesForFiltering().invoke();
+        Property p1 = getPropertiesForFiltering.getP1();
+        Property p2 = getPropertiesForFiltering.getP2();
+
+        kieSession.insert(smartSearch);
+        kieSession.insert(scoredProperties);
+        kieSession.insert(p1);
+        kieSession.insert(p2);
+
+        int rulesFired = kieSession.fireAllRules();
+        assertEquals(2, rulesFired);
+    }
+
+    @Test
+    public void filterProperties_HEATING_NOT_FOUND() {
+        KieSession kieSession = kieContainer.getKieBase("KBase2").newKieSession();
+        kieSession.getAgenda().getAgendaGroup(agenda).setFocus();
+
+        SmartSearch smartSearch = new SmartSearch(
+                new PersonalInformation(0, 0, 0,
+                        true, true, Lists.emptyList()),
+                new PropertyInformation(0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        Lists.list(Heating.RADIANT),
+                        Lists.emptyList(),
+                        Lists.emptyList())
+        );
+        ScoredProperties scoredProperties = new ScoredProperties(Lists.emptyList());
+
+        GetPropertiesForFiltering getPropertiesForFiltering = new GetPropertiesForFiltering().invoke();
+        Property p1 = getPropertiesForFiltering.getP1();
+        Property p2 = getPropertiesForFiltering.getP2();
+
+        kieSession.insert(smartSearch);
+        kieSession.insert(scoredProperties);
+        kieSession.insert(p1);
+        kieSession.insert(p2);
+
+        int rulesFired = kieSession.fireAllRules();
+        assertEquals(0, rulesFired);
+    }
+
+    @Test
+    public void filterProperties_PETS() {
+        KieSession kieSession = kieContainer.getKieBase("KBase2").newKieSession();
+        kieSession.getAgenda().getAgendaGroup(agenda).setFocus();
+
+        SmartSearch smartSearch = new SmartSearch(
+                new PersonalInformation(0, 0, 0,
+                        true, true, Lists.emptyList()),
+                new PropertyInformation(0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        Lists.list(Heating.FURNACE, Heating.BOILER),
+                        Lists.list(PetStatus.DOGS),
+                        Lists.emptyList())
+        );
+        ScoredProperties scoredProperties = new ScoredProperties(Lists.emptyList());
+
+        GetPropertiesForFiltering getPropertiesForFiltering = new GetPropertiesForFiltering().invoke();
+        Property p1 = getPropertiesForFiltering.getP1();
+        Property p2 = getPropertiesForFiltering.getP2();
+
+        kieSession.insert(smartSearch);
+        kieSession.insert(scoredProperties);
+        kieSession.insert(p1);
+        kieSession.insert(p2);
+
+        int rulesFired = kieSession.fireAllRules();
+        assertEquals(1, rulesFired);
+    }
+
+    @Test
+    public void filterProperties_PETS_NOT_FOUND() {
+        KieSession kieSession = kieContainer.getKieBase("KBase2").newKieSession();
+        kieSession.getAgenda().getAgendaGroup(agenda).setFocus();
+
+        SmartSearch smartSearch = new SmartSearch(
+                new PersonalInformation(0, 0, 0,
+                        true, true, Lists.emptyList()),
+                new PropertyInformation(0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        Lists.list(Heating.FURNACE, Heating.BOILER),
+                        Lists.list(PetStatus.IN_AQUARIUM),
+                        Lists.emptyList())
+        );
+        ScoredProperties scoredProperties = new ScoredProperties(Lists.emptyList());
+
+        GetPropertiesForFiltering getPropertiesForFiltering = new GetPropertiesForFiltering().invoke();
+        Property p1 = getPropertiesForFiltering.getP1();
+        Property p2 = getPropertiesForFiltering.getP2();
+
+        kieSession.insert(smartSearch);
+        kieSession.insert(scoredProperties);
+        kieSession.insert(p1);
+        kieSession.insert(p2);
+
+        int rulesFired = kieSession.fireAllRules();
+        assertEquals(0, rulesFired);
+    }
+
+    @Test
+    public void filterProperties_AMENITIES() {
+        KieSession kieSession = kieContainer.getKieBase("KBase2").newKieSession();
+        kieSession.getAgenda().getAgendaGroup(agenda).setFocus();
+
+        SmartSearch smartSearch = new SmartSearch(
+                new PersonalInformation(0, 0, 0,
+                        true, true, Lists.emptyList()),
+                new PropertyInformation(0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        Lists.list(Heating.FURNACE, Heating.BOILER),
+                        Lists.emptyList(),
+                        Lists.list(Amenity.ELEVATOR))
+        );
+        ScoredProperties scoredProperties = new ScoredProperties(Lists.emptyList());
+
+        GetPropertiesForFiltering getPropertiesForFiltering = new GetPropertiesForFiltering().invoke();
+        Property p1 = getPropertiesForFiltering.getP1();
+        Property p2 = getPropertiesForFiltering.getP2();
+
+        kieSession.insert(smartSearch);
+        kieSession.insert(scoredProperties);
+        kieSession.insert(p1);
+        kieSession.insert(p2);
+
+        int rulesFired = kieSession.fireAllRules();
+        assertEquals(2, rulesFired);
+    }
+
+    @Test
+    public void filterProperties_AMENITIES_NOT_FOUND() {
+        KieSession kieSession = kieContainer.getKieBase("KBase2").newKieSession();
+        kieSession.getAgenda().getAgendaGroup(agenda).setFocus();
+
+        SmartSearch smartSearch = new SmartSearch(
+                new PersonalInformation(0, 0, 0,
+                        true, true, Lists.emptyList()),
+                new PropertyInformation(0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        0, 2147483647,
+                        Lists.list(Heating.FURNACE, Heating.BOILER),
+                        Lists.emptyList(),
+                        Lists.list(Amenity.SWIMMING_POOL))
+        );
+        ScoredProperties scoredProperties = new ScoredProperties(Lists.emptyList());
+
+        GetPropertiesForFiltering getPropertiesForFiltering = new GetPropertiesForFiltering().invoke();
+        Property p1 = getPropertiesForFiltering.getP1();
+        Property p2 = getPropertiesForFiltering.getP2();
+
+        kieSession.insert(smartSearch);
+        kieSession.insert(scoredProperties);
+        kieSession.insert(p1);
+        kieSession.insert(p2);
+
+        int rulesFired = kieSession.fireAllRules();
+        assertEquals(0, rulesFired);
+    }
+
     private static class GetPropertiesForFiltering {
         private Property p1;
         private Property p2;
@@ -312,7 +498,7 @@ public class Filtering {
             p2.setSize(500);
             p2.setNumberOfBeds(20);
             p2.setNumberOfBathrooms(10);
-            p2.setHeating(Heating.BOILER);
+            p2.setHeating(Heating.FURNACE);
             p2.setStatus(PropertyStatus.FOR_SALE);
             p2.setAllowedPets(Set.of(PetStatus.CATS));
             p2.setAmenities(Set.of(Amenity.ELEVATOR, Amenity.GATED, Amenity.SECURITY));

@@ -27,7 +27,6 @@ rule "Calculate pet score - CATS" salience 1
             scaler.getFiredRules() not contains "Calculate pet score - CATS",
             property.getAllowedPets() contains PetStatus.CATS
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding CATS pet score for %s", $ps.getProperty().getId()));
 
@@ -43,14 +42,13 @@ end
 // DOGS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-rule "Calculate pet score - BOILER" salience 1
+rule "Calculate pet score - DOGS" salience 1
     agenda-group "pet_score_calculation"
     when
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains "Calculate pet score - DOGS",
             property.getAllowedPets() contains PetStatus.DOGS
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding DOGS pet score for %s", $ps.getProperty().getId()));
 
@@ -73,7 +71,6 @@ rule "Calculate pet score - IN_AQUARIUM" salience 1
             scaler.getFiredRules() not contains "Calculate pet score - IN_AQUARIUM",
             property.getAllowedPets() contains PetStatus.IN_AQUARIUM
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding IN_AQUARIUM pet score for %s", $ps.getProperty().getId()));
 
@@ -96,7 +93,6 @@ rule "Calculate pet score - IN_TERRARIUM" salience 1
             scaler.getFiredRules() not contains "Calculate pet score - IN_TERRARIUM",
             property.getAllowedPets() contains PetStatus.IN_TERRARIUM
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding IN_TERRARIUM pet score for %s", $ps.getProperty().getId()));
 

@@ -25,9 +25,8 @@ rule "Calculate heating score - FURNACE" salience 1
     when
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains "Calculate heating score - FURNACE",
-            property.getHeating() contains Heating.FURNACE
-         );
-        $sp: ScoredProperties()
+            property.getHeating() == Heating.FURNACE
+        );
     then
         System.out.println(String.format("Adding FURNACE heating score for %s", $ps.getProperty().getId()));
 
@@ -47,10 +46,9 @@ rule "Calculate heating score - BOILER" salience 1
     agenda-group "heating_score_calculation"
     when
         $ps: PropertyWithScore(
-            scaler.getFiredRules() not contains "Calculate heating score - FURNACE",
-            property.getHeating() contains Heating.BOILER
-         );
-        $sp: ScoredProperties()
+            scaler.getFiredRules() not contains "Calculate heating score - BOILER",
+            property.getHeating() == Heating.BOILER
+        );
     then
         System.out.println(String.format("Adding BOILER heating score for %s", $ps.getProperty().getId()));
 
@@ -71,9 +69,8 @@ rule "Calculate heating score - HEAT_PUMP" salience 1
     when
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains "Calculate heating score - HEAT_PUMP",
-            property.getHeating() contains Heating.HEAT_PUMP
-         );
-        $sp: ScoredProperties()
+            property.getHeating()  == Heating.HEAT_PUMP
+        );
     then
         System.out.println(String.format("Adding HEAT_PUMP heating score for %s", $ps.getProperty().getId()));
 
@@ -94,9 +91,8 @@ rule "Calculate heating score - HYBRID" salience 1
     when
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains "Calculate heating score - HYBRID",
-            property.getHeating() contains Heating.HYBRID
-         );
-        $sp: ScoredProperties()
+            property.getHeating() == Heating.HYBRID
+        );
     then
         System.out.println(String.format("Adding HYBRID heating score for %s", $ps.getProperty().getId()));
 
@@ -117,9 +113,8 @@ rule "Calculate heating score - DUCTLESS_MINI_SPLITS" salience 1
     when
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains "Calculate heating score - DUCTLESS_MINI_SPLITS",
-            property.getHeating() contains Heating.DUCTLESS_MINI_SPLITS
+            property.getHeating() == Heating.DUCTLESS_MINI_SPLITS
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding DUCTLESS_MINI_SPLITS heating score for %s", $ps.getProperty().getId()));
 
@@ -140,9 +135,8 @@ rule "Calculate heating score - RADIANT" salience 1
     when
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains "Calculate heating score - RADIANT",
-            property.getHeating() contains Heating.RADIANT
+            property.getHeating() == Heating.RADIANT
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding RADIANT heating score for %s", $ps.getProperty().getId()));
 

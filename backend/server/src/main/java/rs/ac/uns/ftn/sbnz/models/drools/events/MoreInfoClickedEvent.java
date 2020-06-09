@@ -5,6 +5,7 @@ import org.kie.api.definition.type.Role;
 import org.kie.api.definition.type.Timestamp;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Role(Role.Type.EVENT)
 @Timestamp("clickedAt")
@@ -33,5 +34,19 @@ public class MoreInfoClickedEvent {
 
     public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MoreInfoClickedEvent event = (MoreInfoClickedEvent) o;
+        return clickedAt.equals(event.clickedAt) &&
+                propertyId.equals(event.propertyId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clickedAt, propertyId);
     }
 }

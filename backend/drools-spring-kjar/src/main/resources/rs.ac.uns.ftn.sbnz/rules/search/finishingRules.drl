@@ -17,6 +17,7 @@ import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
 import java.util.List;
 
 rule "Add to return list" salience 0
+    no-loop
     agenda-group "finishing"
     when
         $ps: PropertyWithScore();
@@ -24,4 +25,5 @@ rule "Add to return list" salience 0
     then
         System.out.println(String.format("Adding: %s", $ps.getProperty().getId()));
         $sp.getPropertyWithScores().add($ps);
+        update($sp);
 end

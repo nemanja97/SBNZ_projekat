@@ -27,7 +27,6 @@ rule "Calculate amenity score - ELEVATOR" salience 1
             scaler.getFiredRules() not contains "Calculate amenity score - ELEVATOR",
             property.getAmenities() contains Amenity.ELEVATOR
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding ELEVATOR amenity score for %s", $ps.getProperty().getId()));
 
@@ -50,7 +49,6 @@ rule "Calculate amenity score - AIR_CONDITIONING" salience 1
             scaler.getFiredRules() not contains "Calculate amenity score - AIR_CONDITIONING",
             property.getAmenities() contains Amenity.AIR_CONDITIONING
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding AIR_CONDITIONING amenity score for %s", $ps.getProperty().getId()));
 
@@ -73,7 +71,6 @@ rule "Calculate amenity score - CABLE_READY" salience 1
             scaler.getFiredRules() not contains "Calculate amenity score - CABLE_READY",
             property.getAmenities() contains Amenity.CABLE_READY
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding CABLE_READY amenity score for %s", $ps.getProperty().getId()));
 
@@ -96,7 +93,6 @@ rule "Calculate amenity score - HIGH_SPEED_INTERNET_ACCESS" salience 1
             scaler.getFiredRules() not contains "Calculate amenity score - HIGH_SPEED_INTERNET_ACCESS",
             property.getAmenities() contains Amenity.HIGH_SPEED_INTERNET_ACCESS
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding HIGH_SPEED_INTERNET_ACCESS amenity score for %s", $ps.getProperty().getId()));
 
@@ -119,7 +115,6 @@ rule "Calculate amenity score - SWIMMING_POOL" salience 1
             scaler.getFiredRules() not contains "Calculate amenity score - SWIMMING_POOL",
             property.getAmenities() contains Amenity.SWIMMING_POOL
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding SWIMMING_POOL amenity score for %s", $ps.getProperty().getId()));
 
@@ -142,7 +137,6 @@ rule "Calculate amenity score - GARAGE" salience 1
             scaler.getFiredRules() not contains "Calculate amenity score - GARAGE",
             property.getAmenities() contains Amenity.GARAGE
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding GARAGE amenity score for %s", $ps.getProperty().getId()));
 
@@ -165,7 +159,6 @@ rule "Calculate amenity score - SECURITY" salience 1
             scaler.getFiredRules() not contains "Calculate amenity score - SECURITY",
             property.getAmenities() contains Amenity.SECURITY
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding SECURITY amenity score for %s", $ps.getProperty().getId()));
 
@@ -188,7 +181,6 @@ rule "Calculate amenity score - GATED" salience 1
             scaler.getFiredRules() not contains "Calculate amenity score - GATED",
             property.getAmenities() contains Amenity.GATED
          );
-        $sp: ScoredProperties()
     then
         System.out.println(String.format("Adding GATED amenity score for %s", $ps.getProperty().getId()));
 

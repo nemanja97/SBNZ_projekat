@@ -63,7 +63,7 @@ end
 rule "Calculate school distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.SCHOOL))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate school distance score %s - LOWER", $poi.getId())
         )
@@ -81,7 +81,7 @@ end
 rule "Calculate school distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.SCHOOL))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate school distance score %s - HIGHER", $poi.getId())
         )
@@ -97,13 +97,13 @@ rule "Calculate school distance score - HIGHER" salience 1
 end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// UNIVSERSITY DISTANCE
+// UNIVERSITY DISTANCE
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 rule "Calculate university distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.UNIVERSITY))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate university distance score %s - LOWER", $poi.getId())
         )
@@ -121,7 +121,7 @@ end
 rule "Calculate university distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.UNIVERSITY))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate university distance score %s - HIGHER", $poi.getId())
         )
@@ -143,7 +143,7 @@ end
 rule "Calculate hospital distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.HOSPITAL))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate hospital distance score %s - LOWER", $poi.getId())
         )
@@ -161,7 +161,7 @@ end
 rule "Calculate hospital distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.HOSPITAL))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate hospital distance score %s - HIGHER", $poi.getId())
         )
@@ -183,7 +183,7 @@ end
 rule "Calculate bank distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.BANK))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate bank distance score %s - LOWER", $poi.getId())
         )
@@ -201,7 +201,7 @@ end
 rule "Calculate bank distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.BANK))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate bank distance score %s - HIGHER", $poi.getId())
         )
@@ -223,7 +223,7 @@ end
 rule "Calculate park distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.PARK))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate park distance score %s - LOWER", $poi.getId())
         )
@@ -241,7 +241,7 @@ end
 rule "Calculate park distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.PARK))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate park distance score %s - HIGHER", $poi.getId())
         )
@@ -263,7 +263,7 @@ end
 rule "Calculate gym distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.GYM))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate gym distance score %s - LOWER", $poi.getId())
         )
@@ -281,7 +281,7 @@ end
 rule "Calculate gym distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.GYM))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate gym distance score %s - HIGHER", $poi.getId())
         )
@@ -303,7 +303,7 @@ end
 rule "Calculate restaurant distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.RESTAURANT))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate restaurant distance score %s - LOWER", $poi.getId())
         )
@@ -321,7 +321,7 @@ end
 rule "Calculate restaurant distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.RESTAURANT))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate restaurant distance score %s - HIGHER", $poi.getId())
         )
@@ -343,7 +343,7 @@ end
 rule "Calculate theater distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.THEATER))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate theater distance score %s - LOWER", $poi.getId())
         )
@@ -361,7 +361,7 @@ end
 rule "Calculate theater distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.THEATER))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate theater distance score %s - HIGHER", $poi.getId())
         )
@@ -383,7 +383,7 @@ end
 rule "Calculate cinema distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.CINEMA))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate cinema distance score %s - LOWER", $poi.getId())
         )
@@ -401,7 +401,7 @@ end
 rule "Calculate cinema distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.CINEMA))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate cinema distance score %s - HIGHER", $poi.getId())
         )
@@ -423,7 +423,7 @@ end
 rule "Calculate supermarket distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.SUPERMARKET))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate supermarket distance score %s - LOWER", $poi.getId())
         )
@@ -441,7 +441,7 @@ end
 rule "Calculate supermarket distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.SUPERMARKET))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate supermarket distance score %s - HIGHER", $poi.getId())
         )
@@ -463,7 +463,7 @@ end
 rule "Calculate shopping center distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.SHOPPING_CENTER))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate shopping center distance score %s - LOWER", $poi.getId())
         )
@@ -481,7 +481,7 @@ end
 rule "Calculate shopping center distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.SHOPPING_CENTER))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate shopping center distance score %s - HIGHER", $poi.getId())
         )
@@ -503,7 +503,7 @@ end
 rule "Calculate night club distance score - LOWER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.NIGHT_CLUB))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate night club distance score %s - LOWER", $poi.getId())
         )
@@ -521,7 +521,7 @@ end
 rule "Calculate night club distance score - HIGHER" salience 1
     agenda-group "distance_score_calculation"
     when
-        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.KINDERGARTEN))
+        $poi: PlaceOfInterest(typeOfPlace.equals(TypeOfPlace.NIGHT_CLUB))
         $ps: PropertyWithScore(
             scaler.getFiredRules() not contains String.format("Calculate night club distance score %s - HIGHER", $poi.getId())
         )

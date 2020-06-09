@@ -3,7 +3,6 @@ package rs.ac.uns.ftn.sbnz.service.implementation;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.sbnz.models.drools.events.MoreInfoClickedEvent;
 import rs.ac.uns.ftn.sbnz.service.AnalyticsService;

@@ -194,7 +194,7 @@ rule "Interested in higher price properties" salience 2
     agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in higher price properties");
-        $ss: SmartSearch(propertyInformation.sizeLow > 10000);
+        $ss: SmartSearch(propertyInformation.priceLow > 10000);
    then
         System.out.println(String.format("Higher price properties score scaling for %s", $ps.getProperty().getId()));
         $ps.getScaler().setSecurityScale(
