@@ -12,8 +12,8 @@ public class PropertyPriceAdvice {
     @Autowired
     private AnalyticsService service;
 
-    @Scheduled(fixedRate = 1000) // At every second.
-//    @Scheduled(cron = 0 0 * * MON") // At 00:00 on Monday.
+//    @Scheduled(fixedRate = 1000) // At every second.
+    @Scheduled(fixedRate = 1209600) // Biweekly
     public void getPriceAdvice() {
         System.out.println(service.getPriceAdvice());
     }

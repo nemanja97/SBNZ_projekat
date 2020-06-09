@@ -81,8 +81,7 @@ public class Analytics {
         p.setId(1L);
 
         for (int i = 0; i < 20; i++) {
-            MoreInfoClickedEvent infoClickedEvent = new MoreInfoClickedEvent(new Date(), p.getId());
-            kieSession.insert(infoClickedEvent);
+            kieSession.insert(new MoreInfoClickedEvent(new Date(clock.getCurrentTime()), p.getId()));
             clock.advanceTime(1, TimeUnit.MINUTES);
         }
 
@@ -98,20 +97,56 @@ public class Analytics {
 
     @Test
     public void analytics_HIGH() {
-        KieSession kieSession = kieContainer.getKieBase("KBase1").newKieSession();
+        KieSessionConfiguration ksconf = KieServices.Factory.get().newKieSessionConfiguration();
+        ksconf.setOption(ClockTypeOption.get(ClockType.PSEUDO_CLOCK.getId()));
+
+        KieSession kieSession = kieContainer.getKieBase("KBase1").newKieSession(ksconf, null);
+        SessionPseudoClock clock = kieSession.getSessionClock();
 
         Property p = new Property();
         p.setId(1L);
 
         for (int i = 0; i < 30; i++) {
-            kieSession.insert(new MoreInfoClickedEvent(new Date(), p.getId()));
+            kieSession.insert(new MoreInfoClickedEvent(new Date(clock.getCurrentTime()), p.getId()));
+            clock.advanceTime(1, TimeUnit.MINUTES);
         }
 
         kieSession.insert(p);
         System.out.println(kieSession.getFactCount());
         System.out.println(kieSession.fireAllRules());
 
+        Collection<?> newEvents = kieSession.getObjects(new ClassObjectFilter(MoreInfoClickedEvent.class));
+        assertEquals(30, newEvents.size());
         assertEquals(PriceRecommendation.HIGHER, p.getPriceRecommendation());
+        kieSession.dispose();
+    }
+
+    @Test
+    public void analytics_EXPIRATION_WINDOW() {
+        KieSessionConfiguration ksconf = KieServices.Factory.get().newKieSessionConfiguration();
+        ksconf.setOption(ClockTypeOption.get(ClockType.PSEUDO_CLOCK.getId()));
+
+        KieSession kieSession = kieContainer.getKieBase("KBase1").newKieSession(ksconf, null);
+        SessionPseudoClock clock = kieSession.getSessionClock();
+
+        Property p = new Property();
+        p.setId(1L);
+
+        kieSession.insert(new MoreInfoClickedEvent(new Date(clock.getCurrentTime()), p.getId()));
+        clock.advanceTime(14, TimeUnit.DAYS);
+
+        for (int i = 0; i < 9; i++) {
+            kieSession.insert(new MoreInfoClickedEvent(new Date(clock.getCurrentTime()), p.getId()));
+            clock.advanceTime(1, TimeUnit.MINUTES);
+        }
+
+        kieSession.insert(p);
+        System.out.println(kieSession.getFactCount());
+        System.out.println(kieSession.fireAllRules());
+
+        Collection<?> newEvents = kieSession.getObjects(new ClassObjectFilter(MoreInfoClickedEvent.class));
+        assertEquals(9, newEvents.size());
+        assertEquals(PriceRecommendation.LOWER, p.getPriceRecommendation());
         kieSession.dispose();
     }
 }
