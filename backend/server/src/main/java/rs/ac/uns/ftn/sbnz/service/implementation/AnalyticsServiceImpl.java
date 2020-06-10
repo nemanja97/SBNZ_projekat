@@ -4,7 +4,9 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.sbnz.models.Property;
 import rs.ac.uns.ftn.sbnz.models.drools.events.MoreInfoClickedEvent;
+import rs.ac.uns.ftn.sbnz.repository.PropertyRepository;
 import rs.ac.uns.ftn.sbnz.service.AnalyticsService;
 import rs.ac.uns.ftn.sbnz.service.PropertyService;
 
@@ -21,11 +23,14 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     private final PropertyService propertyService;
 
+    private final PropertyRepository propertyRepository;
 
-    public AnalyticsServiceImpl(KieContainer kieContainer, PropertyService propertyService) {
+
+    public AnalyticsServiceImpl(KieContainer kieContainer, PropertyService propertyService, PropertyRepository repository) {
         this.kieContainer = kieContainer;
         this.analyticsSession = this.kieContainer.getKieBase("KBase1").newKieSession();
         this.propertyService = propertyService;
+        this.propertyRepository = repository;
     }
 
     @Override
@@ -38,9 +43,12 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     @Override
     public int getPriceAdvice() {
         List<FactHandle> factHandles = new ArrayList<>();
-        propertyService.getProperties().forEach(p -> factHandles.add(analyticsSession.insert(p)));
+        List<Property> properties = propertyService.getProperties();
+        properties.forEach(p -> factHandles.add(analyticsSession.insert(p)));
 
         int fired = analyticsSession.fireAllRules();
+
+        properties.forEach(propertyRepository::save);
         factHandles.forEach(fh -> analyticsSession.delete(fh));
         return fired;
     }

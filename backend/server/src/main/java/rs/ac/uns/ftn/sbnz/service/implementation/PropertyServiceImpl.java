@@ -102,6 +102,7 @@ public class PropertyServiceImpl implements PropertyService {
         properties.forEach(kieSession::insert);
 
         System.out.println(kieSession.fireAllRules());
+        propertyRepository.save(property);
         kieSession.dispose();
 
         return property;
@@ -126,6 +127,7 @@ public class PropertyServiceImpl implements PropertyService {
             oldProperty.setStatus(property.getStatus());
             oldProperty.setAllowedPets(property.getAllowedPets());
             oldProperty.setAmenities(property.getAmenities());
+            oldProperty.setPriceRecommendation(property.getPriceRecommendation());
             propertyRepository.save(oldProperty);
         } else {
             throw new PropertyNotFoundException();
