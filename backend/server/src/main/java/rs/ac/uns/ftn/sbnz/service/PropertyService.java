@@ -15,6 +15,8 @@ public interface PropertyService {
 
     ScoredProperties getOptimalProperties(SmartSearch smartSearch);
 
+    Property recommend(Property property);
+
     Optional<Property> getProperty(Long id);
 
     void updateProperty(Long id, Property property);

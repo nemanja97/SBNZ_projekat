@@ -21,18 +21,15 @@ public class Property {
     @Embedded
     private Coordinate coordinate;
 
-	@Position(1)
     private int price;
 
-	@Position(2)
     private int size;
 
-	@Position(3)
     private int numberOfBeds;
 
-	@Position(4)
     private int numberOfBathrooms;
 
+	@Position(1)
     @Enumerated(EnumType.STRING)
     private Heating heating;
 
@@ -197,5 +194,25 @@ public class Property {
 				Objects.equals(allowedPets, property.allowedPets) &&
 				Objects.equals(amenities, property.amenities) &&
 				Objects.equals(multimedia, property.multimedia);
+	}
+
+	@Override
+	public String toString() {
+		return "Property{" +
+				"id=" + id +
+				", coordinate=" + coordinate +
+				", price=" + price +
+				", size=" + size +
+				", numberOfBeds=" + numberOfBeds +
+				", numberOfBathrooms=" + numberOfBathrooms +
+				", heating=" + heating +
+				", status=" + status +
+				", allowedPets=" + allowedPets +
+				", amenities=" + amenities +
+				", multimedia=" + multimedia +
+				", creationDate=" + creationDate +
+				", modifiedDate=" + modifiedDate +
+				", priceRecommendation=" + priceRecommendation +
+				'}';
 	}
 }

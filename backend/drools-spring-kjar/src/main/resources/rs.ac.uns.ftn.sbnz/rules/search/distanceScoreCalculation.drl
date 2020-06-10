@@ -535,3 +535,15 @@ rule "Calculate night club distance score - HIGHER" salience 1
         $ps.getScaler().getFiredRules().add(String.format("Calculate night club distance score %s - HIGHER", $poi.getId()));
         update($ps);
 end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// END RULE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+rule "Calculate distance score - END" salience -1
+    enabled false
+    agenda-group "distance_score_calculation"
+    when
+    then
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("heating_score_calculation").setFocus();
+end

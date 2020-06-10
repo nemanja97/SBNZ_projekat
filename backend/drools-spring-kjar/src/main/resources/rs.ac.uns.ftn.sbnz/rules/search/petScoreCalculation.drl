@@ -103,3 +103,15 @@ rule "Calculate pet score - IN_TERRARIUM" salience 1
         $ps.getScaler().getFiredRules().add("Calculate pet score - IN_TERRARIUM");
         update($ps);
 end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// END RULE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+rule "Calculate pet score - END" salience -1
+    enabled false
+    agenda-group "pet_score_calculation"
+    when
+    then
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("finishing").setFocus();
+end

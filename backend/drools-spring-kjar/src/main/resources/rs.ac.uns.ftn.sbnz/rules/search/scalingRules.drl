@@ -217,3 +217,15 @@ rule "Interested in larger properties" salience 2
         $ps.getScaler().getFiredRules().add("Interested in larger properties");
         update($ps);
 end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// END RULE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+rule "Scaling - END" salience -1
+    enabled false
+    agenda-group "scaling"
+    when
+    then
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("amenity_score_calculation").setFocus();
+end

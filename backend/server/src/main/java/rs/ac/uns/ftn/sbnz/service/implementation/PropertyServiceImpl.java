@@ -88,6 +88,26 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public Property recommend(Property property) {
+        List<Property> properties = this.getProperties();
+        property.setId(0L);
+
+        List<Property> filteredProperties = new ArrayList<>();
+
+        KieSession kieSession = kieContainer.getKieBase("KBase3").newKieSession();
+        kieSession.getAgenda().getAgendaGroup("recommend").setFocus();
+
+        kieSession.insert(filteredProperties);
+        kieSession.insert(property);
+        properties.forEach(kieSession::insert);
+
+        System.out.println(kieSession.fireAllRules());
+        kieSession.dispose();
+
+        return property;
+    }
+
+    @Override
     public Optional<Property> getProperty(Long id) {
         return propertyRepository.findById(id);
     }

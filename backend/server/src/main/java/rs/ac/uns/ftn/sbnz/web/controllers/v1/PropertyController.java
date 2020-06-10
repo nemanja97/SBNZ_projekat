@@ -91,6 +91,14 @@ public class PropertyController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/recommend", method = RequestMethod.POST)
+    public ResponseEntity<PropertyDTO> recommend(@Valid @RequestBody PropertyDTO propertyDTO) {
+        Property property = propertyDTO.convertToEntity();
+        property = propertyService.recommend(property);
+
+        return new ResponseEntity<>(new PropertyDTO(property), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/multimedia/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getMultimediaFile(@PathVariable Long id, HttpServletRequest request) {
         MultimediaFile multimediaFile = multimediaFileService.findById(id);

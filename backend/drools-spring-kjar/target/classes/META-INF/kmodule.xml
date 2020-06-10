@@ -5,4 +5,6 @@
 	</kbase>
 	<kbase name="KBase2" packages="search">
 	</kbase>
+	<kbase name="KBase3" packages="optimalPrice">
+	</kbase>
 </kmodule>

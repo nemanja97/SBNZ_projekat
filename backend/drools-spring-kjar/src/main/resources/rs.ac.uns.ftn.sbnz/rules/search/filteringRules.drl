@@ -30,17 +30,21 @@ rule "Filter properties" salience 3
             heating memberOf $ss.propertyInformation.heating,
             allowedPets.containsAll($ss.propertyInformation.pets),
             amenities.containsAll($ss.propertyInformation.amenities)
-//            allowedPets contains PetStatus() from $ss.getPropertyInformation().getPets(),
-//            amenities contains Amenity() from $ss.getPropertyInformation().getAmenities()
         )
-//        forall ($pet: PetStatus(this memberOf $ss.getPropertyInformation().getPets())
-//            $p.getAllowedPets() contains $pet
-//        )
-//        forall ($amenity: Amenity(this memberOf of $ss.getPropertyInformation().getAmenities())
-//            $p.getAmenities() contains $amenity
-//        )
     then
 
         System.out.println(String.format("Filtered property %s", $id));
         insert(new PropertyWithScore($p));
+end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// END RULE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+rule "Filter - END" salience -1
+    enabled false
+    agenda-group "filtering"
+    when
+    then
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("scaling").setFocus();
 end
