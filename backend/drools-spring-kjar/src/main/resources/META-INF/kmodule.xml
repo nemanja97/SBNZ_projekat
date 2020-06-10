@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule" 
-			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-   
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<kbase name="KBase1" packages="analytics" equalsBehavior="equality" eventProcessingMode="stream">
+	</kbase>
+	<kbase name="KBase2" packages="search">
+	</kbase>
+	<kbase name="KBase3" packages="optimalPrice">
+	</kbase>
 </kmodule>

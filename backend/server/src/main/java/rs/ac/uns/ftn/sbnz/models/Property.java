@@ -1,12 +1,12 @@
 package rs.ac.uns.ftn.sbnz.models;
 
 import org.kie.api.definition.type.Position;
-import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
-import rs.ac.uns.ftn.sbnz.models.enums.Heating;
-import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
-import rs.ac.uns.ftn.sbnz.models.enums.PropertyStatus;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import rs.ac.uns.ftn.sbnz.models.enums.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,18 +21,15 @@ public class Property {
     @Embedded
     private Coordinate coordinate;
 
-	@Position(1)
     private int price;
 
-	@Position(2)
     private int size;
 
-	@Position(3)
     private int numberOfBeds;
 
-	@Position(4)
     private int numberOfBathrooms;
 
+	@Position(1)
     @Enumerated(EnumType.STRING)
     private Heating heating;
 
@@ -51,6 +48,15 @@ public class Property {
 
     @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Set<MultimediaFile> multimedia;
+
+	@CreatedDate
+	private Date creationDate;
+
+	@LastModifiedDate
+	private Date modifiedDate;
+
+	@Enumerated(EnumType.STRING)
+	private PriceRecommendation priceRecommendation;
 
     public Property() {
     }
@@ -111,6 +117,14 @@ public class Property {
 		this.heating = heating;
 	}
 
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
 	public PropertyStatus getStatus() {
 		return status;
 	}
@@ -143,6 +157,14 @@ public class Property {
 		this.multimedia = multimedia;
 	}
 
+	public PriceRecommendation getPriceRecommendation() {
+		return priceRecommendation;
+	}
+
+	public void setPriceRecommendation(PriceRecommendation priceRecommendation) {
+		this.priceRecommendation = priceRecommendation;
+	}
+
 	public double calculateDistance(Property other) {
     	return this.coordinate.calculateDistance(other.getCoordinate());
 	}
@@ -172,5 +194,25 @@ public class Property {
 				Objects.equals(allowedPets, property.allowedPets) &&
 				Objects.equals(amenities, property.amenities) &&
 				Objects.equals(multimedia, property.multimedia);
+	}
+
+	@Override
+	public String toString() {
+		return "Property{" +
+				"id=" + id +
+				", coordinate=" + coordinate +
+				", price=" + price +
+				", size=" + size +
+				", numberOfBeds=" + numberOfBeds +
+				", numberOfBathrooms=" + numberOfBathrooms +
+				", heating=" + heating +
+				", status=" + status +
+				", allowedPets=" + allowedPets +
+				", amenities=" + amenities +
+				", multimedia=" + multimedia +
+				", creationDate=" + creationDate +
+				", modifiedDate=" + modifiedDate +
+				", priceRecommendation=" + priceRecommendation +
+				'}';
 	}
 }

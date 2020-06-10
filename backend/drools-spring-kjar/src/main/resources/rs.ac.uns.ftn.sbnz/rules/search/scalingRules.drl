@@ -17,6 +17,7 @@ import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
 import java.util.List;
 
 rule "Has vehicle" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Has vehicle");
         $ss: SmartSearch(personalInformation.getHasVehicle() == true);
@@ -28,6 +29,7 @@ rule "Has vehicle" salience 2
 end
 
 rule "Expecting kids" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Expecting kids");
         $ss: SmartSearch(personalInformation.getExpectingChildren() == true);
@@ -50,6 +52,7 @@ rule "Expecting kids" salience 2
 end
 
 rule "Younger person" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Younger person");
         $ss: SmartSearch($oa: personalInformation.getYoungerOccupants() > 0);
@@ -75,6 +78,7 @@ rule "Younger person" salience 2
 end
 
 rule "Middle aged person" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Middle aged person");
         $ss: SmartSearch($oa: personalInformation.getMiddleAgedOccupants() > 0);
@@ -91,6 +95,7 @@ rule "Middle aged person" salience 2
 end
 
 rule "Older person" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Older person");
         $ss: SmartSearch($oa: personalInformation.getOlderOccupants() > 0);
@@ -110,6 +115,7 @@ rule "Older person" salience 2
 end
 
 rule "Interested in food" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in food");
         $ss: SmartSearch(Interest.FOOD memberOf personalInformation.getInterests());
@@ -123,6 +129,7 @@ rule "Interested in food" salience 2
 end
 
 rule "Interested in nature" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in nature");
         $ss: SmartSearch(Interest.NATURE memberOf personalInformation.getInterests());
@@ -136,6 +143,7 @@ rule "Interested in nature" salience 2
 end
 
 rule "Interested in sport" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in sport");
         $ss: SmartSearch(Interest.SPORT memberOf personalInformation.getInterests());
@@ -152,6 +160,7 @@ rule "Interested in sport" salience 2
 end
 
 rule "Interested in culture" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in culture");
         $ss: SmartSearch(Interest.CULTURE memberOf personalInformation.getInterests());
@@ -168,6 +177,7 @@ rule "Interested in culture" salience 2
 end
 
 rule "Interested in night life" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in night life");
         $ss: SmartSearch(Interest.NIGHT_LIFE memberOf personalInformation.getInterests());
@@ -181,9 +191,10 @@ rule "Interested in night life" salience 2
 end
 
 rule "Interested in higher price properties" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in higher price properties");
-        $ss: SmartSearch(propertyInformation.sizeLow > 10000);
+        $ss: SmartSearch(propertyInformation.priceLow > 10000);
    then
         System.out.println(String.format("Higher price properties score scaling for %s", $ps.getProperty().getId()));
         $ps.getScaler().setSecurityScale(
@@ -194,6 +205,7 @@ rule "Interested in higher price properties" salience 2
 end
 
 rule "Interested in larger properties" salience 2
+    agenda-group "scaling"
     when
         $ps: PropertyWithScore(scaler.getFiredRules() not contains "Interested in larger properties");
         $ss: SmartSearch(propertyInformation.sizeLow > 150);
@@ -204,4 +216,16 @@ rule "Interested in larger properties" salience 2
         );
         $ps.getScaler().getFiredRules().add("Interested in larger properties");
         update($ps);
+end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// END RULE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+rule "Scaling - END" salience -1
+    enabled false
+    agenda-group "scaling"
+    when
+    then
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("amenity_score_calculation").setFocus();
 end

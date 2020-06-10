@@ -1,0 +1,77 @@
+package rs.ac.uns.ftn.sbnz.rules
+
+import rs.ac.uns.ftn.sbnz.models.drools.events.MoreInfoClickedEvent;
+import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
+import rs.ac.uns.ftn.sbnz.models.*;
+import rs.ac.uns.ftn.sbnz.models.Property;
+import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
+import rs.ac.uns.ftn.sbnz.models.drools.SmartSearch;
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
+import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
+import rs.ac.uns.ftn.sbnz.models.enums.Interest;
+import rs.ac.uns.ftn.sbnz.models.enums.Heating;
+import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
+import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
+import rs.ac.uns.ftn.sbnz.models.enums.PriceRecommendation;
+
+import java.util.List;
+
+rule "Lower property price if there is no interest in it"
+    no-loop
+    when
+        $p: Property($id: id)
+        not (MoreInfoClickedEvent(propertyId == $id) over window:time(14d))
+    then
+        System.out.println(String.format("No interest in %s", $p.getId()));
+        $p.setPriceRecommendation(PriceRecommendation.LOWER);
+        update($p);
+end
+
+rule "Lower property price if there is low interest in it"
+    lock-on-active
+    when
+        $p: Property($id: id)
+        Number(intValue > 0 && intValue < 10) from accumulate(
+            $ev: MoreInfoClickedEvent(
+                propertyId == $id
+            ) over window:time(14d),
+            count($ev)
+        )
+    then
+        System.out.println(String.format("Low interest in %s", $id));
+        $p.setPriceRecommendation(PriceRecommendation.LOWER);
+        update($p);
+end
+
+rule "Keep property price if there is decent interest in it"
+lock-on-active
+    when
+        $p: Property($id: id)
+        Number(intValue >= 10 && intValue <= 20) from accumulate(
+            $ev: MoreInfoClickedEvent(
+                propertyId == $id
+            ) over window:time(14d),
+            count($ev)
+        )
+    then
+        System.out.println(String.format("Decent interest in %s", $id));
+        $p.setPriceRecommendation(PriceRecommendation.KEEP);
+        update($p);
+end
+
+rule "Increase property price if there is high interest in it"
+lock-on-active
+    when
+        $p: Property($id: id)
+        Number(intValue > 20) from accumulate(
+            $ev: MoreInfoClickedEvent(
+                propertyId == $id
+            ) over window:time(14d),
+            count($ev)
+        )
+    then
+        System.out.println(String.format("High interest in %s", $id));
+        $p.setPriceRecommendation(PriceRecommendation.HIGHER);
+        update($p);
+end

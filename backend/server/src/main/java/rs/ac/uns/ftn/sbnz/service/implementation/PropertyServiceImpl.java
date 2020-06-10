@@ -52,19 +52,59 @@ public class PropertyServiceImpl implements PropertyService {
         List<PlaceOfInterest> placesOfInterest = placeOfInterestService.getPlacesOfInterest();
         ScoredProperties scoredProperties = new ScoredProperties(new ArrayList<>());
 
-        KieSession kieSession = kieContainer.newKieSession();
+        KieSession kieSession = kieContainer.getKieBase("KBase2").newKieSession();
         properties.forEach(kieSession::insert);
         placesOfInterest.forEach(kieSession::insert);
         kieSession.insert(scoredProperties);
         kieSession.insert(smartSearch);
 
+        kieSession.getAgenda().getAgendaGroup("filtering").setFocus();
         System.out.println(kieSession.fireAllRules());
+
+        kieSession.getAgenda().getAgendaGroup("scaling").setFocus();
+        System.out.println(kieSession.fireAllRules());
+
+        kieSession.getAgenda().getAgendaGroup("amenity_score_calculation").setFocus();
+        System.out.println(kieSession.fireAllRules());
+
+        kieSession.getAgenda().getAgendaGroup("distance_score_calculation").setFocus();
+        System.out.println(kieSession.fireAllRules());
+
+        kieSession.getAgenda().getAgendaGroup("heating_score_calculation").setFocus();
+        System.out.println(kieSession.fireAllRules());
+
+        kieSession.getAgenda().getAgendaGroup("pet_score_calculation").setFocus();
+        System.out.println(kieSession.fireAllRules());
+
+        kieSession.getAgenda().getAgendaGroup("finishing").setFocus();
+        System.out.println(kieSession.fireAllRules());
+
         kieSession.dispose();
 
         scoredProperties.getPropertyWithScores().sort(PropertyWithScore::compareTo);
         scoredProperties.getPropertyWithScores().forEach(
                 ps -> System.out.println(ps.getScore()));
         return scoredProperties;
+    }
+
+    @Override
+    public Property recommend(Property property) {
+        List<Property> properties = this.getProperties();
+        property.setId(0L);
+
+        List<Property> filteredProperties = new ArrayList<>();
+
+        KieSession kieSession = kieContainer.getKieBase("KBase3").newKieSession();
+        kieSession.getAgenda().getAgendaGroup("recommend").setFocus();
+
+        kieSession.insert(filteredProperties);
+        kieSession.insert(property);
+        properties.forEach(kieSession::insert);
+
+        System.out.println(kieSession.fireAllRules());
+        kieSession.dispose();
+
+        return property;
     }
 
     @Override

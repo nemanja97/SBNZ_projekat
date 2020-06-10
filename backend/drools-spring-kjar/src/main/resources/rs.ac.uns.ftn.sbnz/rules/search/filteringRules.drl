@@ -1,0 +1,122 @@
+package rs.ac.uns.ftn.sbnz.rules
+
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyWithScore;
+import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
+import rs.ac.uns.ftn.sbnz.models.*;
+import rs.ac.uns.ftn.sbnz.models.Property;
+import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
+import rs.ac.uns.ftn.sbnz.models.drools.SmartSearch;
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
+import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
+import rs.ac.uns.ftn.sbnz.models.enums.Interest;
+import rs.ac.uns.ftn.sbnz.models.enums.Heating;
+import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
+import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
+
+import java.lang.Long;
+import java.lang.Integer;
+import java.util.List;
+import java.util.Set;
+import java.util.Collection;
+
+
+rule "Filter properties" salience 3
+    agenda-group "filtering"
+    when
+        $ss: SmartSearch(
+            $priceLow: propertyInformation.priceLow, $priceHigh: propertyInformation.priceHigh,
+            $sizeLow: propertyInformation.sizeLow, $sizeHigh: propertyInformation.sizeHigh,
+            $numberOfBedsLow: propertyInformation.bedsLow, $numberOfBedsHigh: propertyInformation.bedsHigh,
+            $numberOfBathroomsLow: propertyInformation.bathroomsLow, $numberOfBathroomsHigh: propertyInformation.bathroomsHigh,
+            $heating: propertyInformation.heating,
+            $pets: propertyInformation.pets,
+            $amenities: propertyInformation.amenities
+        )
+        $p: Property(
+            $pid: id
+        )
+        filterProperty($pid, $priceLow, $priceHigh, $sizeLow, $sizeHigh, $numberOfBedsLow, $numberOfBedsHigh, $numberOfBathroomsLow, $numberOfBathroomsHigh, $heating, $pets, $amenities;)
+    then
+
+        System.out.println(String.format("Filtered property %s", $pid));
+        insert(new PropertyWithScore($p));
+end
+
+query filterProperty(Long id, int priceLow, int priceHigh, int sizeLow, int sizeHigh, int numOfBedsLow, int numOfBedsHigh, int numOfBathroomsLow, int numOfBathroomsHigh, List heating, List pets, List amenities)
+    matchesPrice(id, priceLow, priceHigh;) and
+    matchesSize(id, sizeLow, sizeHigh;) and
+    matchesNumOfBeds(id, numOfBedsLow, numOfBedsHigh;)
+    matchesNumOfBathrooms(id, numOfBathroomsLow, numOfBathroomsHigh;) and
+    matchesHeating(id, heating;) and
+    matchesPets(id, pets;) and
+    matchesAmenities(id, amenities;)
+end
+
+// Checks if size matches with soft threshold
+query matchesPrice(Long _id, int _priceLow, int _priceHigh)
+    Property(
+        id == _id,
+        price >= _priceLow, price <= _priceHigh
+    )
+end
+
+// Checks if size matches with soft threshold
+query matchesSize(Long _id, int _sizeLow, int _sizeHigh)
+    Property(
+        id == _id,
+        size >= _sizeLow, size <= _sizeHigh
+    )
+end
+
+// Checks if number of beds matches
+query matchesNumOfBeds(Long _id, int _numberOfBedsLow, int _numberOfBedsHigh)
+    Property(
+        id == _id,
+        numberOfBeds >= _numberOfBedsLow, numberOfBeds <= _numberOfBedsHigh
+    )
+end
+
+// Checks if number of bathrooms matches
+query matchesNumOfBathrooms(Long _id, int _numberOfBathroomsLow, int _numberOfBathroomsHigh)
+    Property(
+        id == _id,
+        numberOfBathrooms >= _numberOfBathroomsLow, numberOfBathrooms <= _numberOfBathroomsHigh
+    )
+end
+
+// Checks if heating matches
+query matchesHeating(Long _id, List _heating)
+    Property(id == _id, heating memberOf _heating)
+end
+
+// Checks if pets match
+query matchesPets(Long _id, List _pets)
+    Property(id == _id, $allowedPets: allowedPets) and containsAll(_pets, $allowedPets;)
+end
+
+// Checks if amenities match
+query matchesAmenities(Long _id, List _amenities)
+    Property(id == _id, $amenities: amenities) and containsAll(_amenities, $amenities;)
+end
+
+query containsAll(Collection s1, Collection s2)
+    $num : Number(intValue == s1.size()) from accumulate(
+        Object(this memberOf s2) from s1,
+        init(int count = 0;),
+        action(count += 1;),
+        result(count)
+    )
+end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// END RULE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+rule "Filter - END" salience -1
+    enabled false
+    agenda-group "filtering"
+    when
+    then
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("scaling").setFocus();
+end

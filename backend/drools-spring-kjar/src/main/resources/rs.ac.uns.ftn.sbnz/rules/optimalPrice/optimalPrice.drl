@@ -1,0 +1,112 @@
+package rs.ac.uns.ftn.sbnz.rules
+
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyWithScore;
+import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
+import rs.ac.uns.ftn.sbnz.models.*;
+import rs.ac.uns.ftn.sbnz.models.Property;
+import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
+import rs.ac.uns.ftn.sbnz.models.drools.SmartSearch;
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
+import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
+import rs.ac.uns.ftn.sbnz.models.enums.Interest;
+import rs.ac.uns.ftn.sbnz.models.enums.Heating;
+import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
+import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
+
+import java.lang.Long;
+import java.lang.Integer;
+import java.util.List;
+import java.util.Set;
+
+
+rule "Filter similar properties" salience 1
+    agenda-group "recommend"
+    when
+        $filteredList: List()
+        $original: Property(
+            id == 0L,
+            $size: size,
+            $numberOfBeds: numberOfBeds,
+            $numberOfBathrooms: numberOfBathrooms,
+            $heating: heating,
+            $pets: allowedPets,
+            $amenities: amenities
+        )
+        $p: Property(
+            $id: id
+        )
+        eval($id != 0L)
+        filterProperty($id, $size, $numberOfBeds, $numberOfBathrooms, $heating, $pets, $amenities;)
+    then
+        System.out.println(String.format("Filtered out property: %s", $p));
+        $filteredList.add($p);
+end
+
+rule "Determine price" salience 0
+    agenda-group "recommend"
+    when
+        $filteredList: List()
+        $average : Number() from accumulate(
+            Property($price: price) from $filteredList,
+            average($price)
+        )
+        $original: Property(
+            id == 0L
+        )
+    then
+        System.out.println("AVERAGE: " + $average);
+        $original.setPrice($average.intValue());
+        update($original);
+        drools.halt();
+end
+
+query filterProperty(Long id, int size, int numOfBeds, int numOfBathrooms, Heating heating, Set pets, Set amenities)
+    matchesSize(id, size;) and
+    matchesNumOfBeds(id, numOfBeds;) and
+    matchesNumOfBathrooms(id, numOfBathrooms;) and
+    matchesHeating(id, heating;) and
+    matchesPets(id, pets;) and
+    matchesAmenities(id, amenities;)
+end
+
+// Checks if size matches with soft threshold
+query matchesSize(Long _id, int _size)
+    Property(
+        id == _id,
+        _size >= size - 10, _size <= size + 10)
+end
+
+// Checks if number of beds matches
+query matchesNumOfBeds(Long _id, int _numberOfBeds)
+    Property(id == _id, numberOfBeds == _numberOfBeds)
+end
+
+// Checks if number of bathrooms matches
+query matchesNumOfBathrooms(Long _id, int _numberOfBathrooms)
+    Property(id == _id, numberOfBathrooms == _numberOfBathrooms)
+end
+
+// Checks if heating matches
+query matchesHeating(Long _id, Heating _heating)
+    Property(id == _id, heating == _heating)
+end
+
+// Checks if pets match
+query matchesPets(Long _id, Set _pets)
+    Property(id == _id, $allowedPets: allowedPets) and containsAll($allowedPets, _pets;)
+end
+
+// Checks if amenities match
+query matchesAmenities(Long _id, Set _amenities)
+    Property(id == _id, $amenities: amenities) and containsAll($amenities, _amenities;)
+end
+
+query containsAll(Set s1, Set s2)
+    $num : Number(intValue == s1.size()) from accumulate(
+        Object(this memberOf s2) from s1,
+        init(int count = 0;),
+        action(count += 1;),
+        result(count)
+    )
+end
