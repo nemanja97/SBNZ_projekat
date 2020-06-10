@@ -1,28 +1,29 @@
 package rs.ac.uns.ftn.sbnz.drools.unit;
 
 import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.springframework.test.context.junit4.SpringRunner;
 import rs.ac.uns.ftn.sbnz.models.Coordinate;
-import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
 import rs.ac.uns.ftn.sbnz.models.Property;
 import rs.ac.uns.ftn.sbnz.models.drools.PropertyWithScore;
 import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
-import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@RunWith(SpringRunner.class)
 public class Finishing {
 
     private static KieContainer kieContainer;
 
     private static final String agenda = "finishing";
 
-    @BeforeAll
-    static void createContainer() {
+    @Before
+    public void setup() {
         KieServices kieServices = KieServices.Factory.get();
         kieContainer = kieServices.newKieContainer(kieServices.
                 newReleaseId("rs.ac.uns.ftn", "drools-spring-kjar", "0.0.1-SNAPSHOT"));

@@ -1,21 +1,18 @@
 package rs.ac.uns.ftn.sbnz.drools.unit;
 
-import org.assertj.core.util.Lists;
 import org.drools.core.ClockType;
 import org.drools.core.time.SessionPseudoClock;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.ClassObjectFilter;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.KieSessionConfiguration;
 import org.kie.api.runtime.conf.ClockTypeOption;
-import rs.ac.uns.ftn.sbnz.models.Coordinate;
+import org.springframework.test.context.junit4.SpringRunner;
 import rs.ac.uns.ftn.sbnz.models.Property;
-import rs.ac.uns.ftn.sbnz.models.drools.PropertyWithScore;
-import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
 import rs.ac.uns.ftn.sbnz.models.drools.events.MoreInfoClickedEvent;
 import rs.ac.uns.ftn.sbnz.models.enums.PriceRecommendation;
 
@@ -24,14 +21,14 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@RunWith(SpringRunner.class)
 public class Analytics {
 
     private static KieContainer kieContainer;
 
-    @BeforeAll
-    static void createContainer() {
+    @Before
+    public void setup() {
         KieServices kieServices = KieServices.Factory.get();
         kieContainer = kieServices.newKieContainer(kieServices.
                 newReleaseId("rs.ac.uns.ftn", "drools-spring-kjar", "0.0.1-SNAPSHOT"));

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 
-rule "Recommend price" salience 1
+rule "Filter similar properties" salience 1
     agenda-group "recommend"
     when
         $filteredList: List()
@@ -56,15 +56,18 @@ rule "Determine price" salience 0
         )
     then
         System.out.println("AVERAGE: " + $average);
+        $original.setPrice($average.intValue());
+        update($original);
+        drools.halt();
 end
 
 query filterProperty(Long id, int size, int numOfBeds, int numOfBathrooms, Heating heating, Set pets, Set amenities)
-    matchesSize(id, size;);
-    matchesNumOfBeds(id, numOfBeds;);
-    matchesNumOfBathrooms(id, numOfBathrooms;);
-    matchesHeating(id, heating;);
-    matchesPets(id, pets;);
-    matchesAmenities(id, amenities;);
+    matchesSize(id, size;) and
+    matchesNumOfBeds(id, numOfBeds;) and
+    matchesNumOfBathrooms(id, numOfBathrooms;) and
+    matchesHeating(id, heating;) and
+    matchesPets(id, pets;) and
+    matchesAmenities(id, amenities;)
 end
 
 // Checks if size matches with soft threshold

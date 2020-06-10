@@ -1,11 +1,13 @@
 package rs.ac.uns.ftn.sbnz.drools.unit;
 
 import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.springframework.test.context.junit4.SpringRunner;
 import rs.ac.uns.ftn.sbnz.models.Property;
 import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
 import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
@@ -16,19 +18,19 @@ import rs.ac.uns.ftn.sbnz.models.enums.Heating;
 import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
 import rs.ac.uns.ftn.sbnz.models.enums.PropertyStatus;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@RunWith(SpringRunner.class)
 public class Filtering {
 
     private static KieContainer kieContainer;
     
     private static final String agenda = "filtering";
 
-    @BeforeAll
-    static void createContainer() {
+    @Before
+    public void setup() {
         KieServices kieServices = KieServices.Factory.get();
         kieContainer = kieServices.newKieContainer(kieServices.
                 newReleaseId("rs.ac.uns.ftn", "drools-spring-kjar", "0.0.1-SNAPSHOT"));
@@ -231,7 +233,7 @@ public class Filtering {
                 new PropertyInformation(0, 2147483647,
                         0, 2147483647,
                         0, 2147483647,
-                        0, 1,
+                        0, 2,
                         Lists.list(Heating.FURNACE, Heating.BOILER),
                         Lists.emptyList(),
                         Lists.emptyList())
