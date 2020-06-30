@@ -1,0 +1,18 @@
+import axios from "axios";
+import { removeToken } from './TokenService';
+
+export const AuthenticationService = [
+    _login,
+    _logout
+]
+
+export async function _login (credentials) {
+    const data = {
+        ...credentials
+      }
+    return await axios.post(`${process.env.REACT_APP_API_URL}/v1/auth`, data)
+}
+
+function _logout() {
+    removeToken();
+}

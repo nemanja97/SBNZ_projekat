@@ -20,7 +20,6 @@ import rs.ac.uns.ftn.sbnz.security.JwtAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Qualifier("userDetailsServiceImpl")
@@ -64,9 +63,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 antMatchers(HttpMethod.GET, "/api/v1/placesOfInterest").permitAll().
                 antMatchers(HttpMethod.GET, "/api/v1/placesOfInterest/*").permitAll().
                 antMatchers(HttpMethod.POST, "/api/v1/analytics/property/moreInfo/*").permitAll().
-                antMatchers(HttpMethod.GET, "/api/v1/rules").permitAll().
-                antMatchers(HttpMethod.POST, "/api/v1/rules").permitAll().
-                antMatchers(HttpMethod.GET, "/api/v1/rules/*").permitAll().
                 anyRequest().authenticated()
                 .and().cors();
         http.addFilterBefore(jwtAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);

@@ -2,9 +2,20 @@ package rs.ac.uns.ftn.sbnz.service.implementation;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.shared.invoker.*;
+import org.apache.tools.ant.filters.StringInputStream;
+import org.kie.api.KieBaseConfiguration;
+import org.kie.api.builder.Message;
+import org.kie.api.builder.Results;
+import org.kie.api.conf.EqualityBehaviorOption;
+import org.kie.api.conf.EventProcessingOption;
+import org.kie.api.io.ResourceType;
+import org.kie.internal.KnowledgeBaseFactory;
+import org.kie.internal.io.ResourceFactory;
+import org.kie.internal.utils.KieHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.sbnz.exception.RuleNotCompilingException;
 import rs.ac.uns.ftn.sbnz.service.RuleService;
 import rs.ac.uns.ftn.sbnz.web.dto.v1.RuleDTO;
 
@@ -35,7 +46,8 @@ public class RuleServiceImpl implements RuleService {
     }
 
     @Override
-    public void modifyRule(String path, String content) throws IOException, MavenInvocationException {
+    public void modifyRule(String path, String content) throws IOException, MavenInvocationException, RuleNotCompilingException {
+        validate(content);
         Files.writeString(Paths.get(path), content);
         invoker.execute(request);
     }
@@ -63,5 +75,25 @@ public class RuleServiceImpl implements RuleService {
     @Override
     public RuleDTO getRule(String path) throws IOException {
         return new RuleDTO(path, Files.readString(Path.of(path)));
+    }
+
+    @Override
+    public void validate(String rule) throws RuleNotCompilingException {
+        KieHelper kieHelper = new KieHelper();
+        kieHelper.addResource(ResourceFactory.newInputStreamResource(new StringInputStream(rule)), ResourceType.DRL);
+
+        KieBaseConfiguration kieBaseConfiguration = KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
+        kieBaseConfiguration.setOption(EventProcessingOption.STREAM);
+        kieBaseConfiguration.setOption(EqualityBehaviorOption.EQUALITY);
+
+        try {
+            kieHelper.build(kieBaseConfiguration);
+        } catch (Exception ignored) {
+        } finally {
+            Results results = kieHelper.verify();
+            if (results.hasMessages(Message.Level.ERROR)) {
+                throw new RuleNotCompilingException(results.getMessages(Message.Level.ERROR));
+            }
+        }
     }
 }

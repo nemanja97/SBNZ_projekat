@@ -1,10 +1,7 @@
 package rs.ac.uns.ftn.sbnz.web.dto.v1;
 
 import rs.ac.uns.ftn.sbnz.models.*;
-import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
-import rs.ac.uns.ftn.sbnz.models.enums.Heating;
-import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
-import rs.ac.uns.ftn.sbnz.models.enums.PropertyStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -37,6 +34,8 @@ public class PropertyDTO {
 
     private Set<Amenity> amenities;
 
+    private PriceRecommendation priceRecommendation;
+
     public PropertyDTO() {
     }
 
@@ -63,7 +62,8 @@ public class PropertyDTO {
                        @PositiveOrZero(message = "Size must be positive") int size,
                        @PositiveOrZero(message = "Number of beds must be positive") int numberOfBeds,
                        @PositiveOrZero(message = "Number of bathrooms must be positive") int numberOfBathrooms,
-                       Heating heating, PropertyStatus status, Set<PetStatus> allowedPets, Set<Amenity> amenities) {
+                       Heating heating, PropertyStatus status, Set<PetStatus> allowedPets, Set<Amenity> amenities,
+                       PriceRecommendation priceRecommendation) {
         this.id = id;
         this.coordinate = coordinate;
         this.price = price;
@@ -74,6 +74,7 @@ public class PropertyDTO {
         this.status = status;
         this.allowedPets = allowedPets;
         this.amenities = amenities;
+        this.priceRecommendation = priceRecommendation;
     }
 
     public PropertyDTO(Property property) {
@@ -87,6 +88,7 @@ public class PropertyDTO {
         this.status = property.getStatus();
         this.allowedPets = property.getAllowedPets();
         this.amenities = property.getAmenities();
+        this.priceRecommendation = property.getPriceRecommendation();
     }
 
     public Property convertToEntity() {
@@ -183,5 +185,12 @@ public class PropertyDTO {
 	public void setAmenities(Set<Amenity> amenities) {
 		this.amenities = amenities;
 	}
-    
+
+    public PriceRecommendation getPriceRecommendation() {
+        return priceRecommendation;
+    }
+
+    public void setPriceRecommendation(PriceRecommendation priceRecommendation) {
+        this.priceRecommendation = priceRecommendation;
+    }
 }

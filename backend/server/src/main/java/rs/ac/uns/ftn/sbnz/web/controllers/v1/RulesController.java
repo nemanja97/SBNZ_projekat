@@ -6,11 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.sbnz.exception.RuleNotCompilingException;
 import rs.ac.uns.ftn.sbnz.service.RuleService;
 import rs.ac.uns.ftn.sbnz.web.dto.v1.RuleDTO;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,7 +24,7 @@ public class RulesController {
     private RuleService ruleService;
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Object> modifyRule(@Valid @RequestBody RuleDTO ruleDTO) {
         try {
             ruleService.modifyRule(ruleDTO.getPath(), ruleDTO.getContent());
@@ -33,11 +35,25 @@ public class RulesController {
         } catch (MavenInvocationException e) {
             e.printStackTrace();
             return new ResponseEntity<>("Maven error", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (RuleNotCompilingException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getReason(), HttpStatus.BAD_REQUEST);
         }
     }
 
+    @RequestMapping(value="/validate", method = RequestMethod.POST, consumes = "application/json")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<?> validateRule(@RequestBody @Valid RuleDTO ruleDTO) {
+        try {
+            ruleService.validate(ruleDTO.getContent());
+        } catch (RuleNotCompilingException e) {
+            return new ResponseEntity<>(e.getReason(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
-    //    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<RuleDTO>> getRules() {
         return new ResponseEntity<>(ruleService.getRules(), HttpStatus.OK);
     }
