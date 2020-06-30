@@ -15,5 +15,7 @@ public interface RuleService {
 
     RuleDTO getRule(String path) throws IOException;
 
+    void removeRule(String path) throws IOException, MavenInvocationException;
+
     void validate(String rule) throws RuleNotCompilingException;
 }

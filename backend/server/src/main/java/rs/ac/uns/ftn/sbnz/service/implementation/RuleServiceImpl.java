@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.sbnz.service.implementation;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.shared.invoker.*;
 import org.apache.tools.ant.filters.StringInputStream;
 import org.kie.api.KieBaseConfiguration;
@@ -34,6 +33,7 @@ public class RuleServiceImpl implements RuleService {
 
     private InvocationRequest request;
     private Invoker invoker;
+    private final String rulesPath = "../drools-spring-kjar/src/main/resources/rs.ac.uns.ftn.sbnz/rules";
 
     @Autowired
     public RuleServiceImpl(@Value("${mvn.home}") String mavenHome) {
@@ -48,7 +48,7 @@ public class RuleServiceImpl implements RuleService {
     @Override
     public void modifyRule(String path, String content) throws IOException, MavenInvocationException, RuleNotCompilingException {
         validate(content);
-        Files.writeString(Paths.get(path), content);
+        Files.writeString(Paths.get(String.format("%s/%s", rulesPath, path)), content);
         invoker.execute(request);
     }
 
@@ -56,12 +56,12 @@ public class RuleServiceImpl implements RuleService {
     public List<RuleDTO> getRules() {
         List<RuleDTO> ruleDTOList = new ArrayList<>();
 
-        try (Stream<Path> paths = Files.walk(Paths.get("../drools-spring-kjar/src/main/resources/rs.ac.uns.ftn.sbnz/rules"))) {
+        try (Stream<Path> paths = Files.walk(Paths.get(rulesPath))) {
             paths
                     .filter(Files::isRegularFile)
                     .forEach(p -> {
                         try {
-                            ruleDTOList.add(getRule(p.toString()));
+                            ruleDTOList.add(getRuleFullPath(p.toString()));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -72,9 +72,19 @@ public class RuleServiceImpl implements RuleService {
         return ruleDTOList;
     }
 
+    public RuleDTO getRuleFullPath(String path) throws IOException {
+        return new RuleDTO(path.substring(path.indexOf("rules") + "rules".length() + 1), Files.readString(Path.of(path)));
+    }
+
     @Override
     public RuleDTO getRule(String path) throws IOException {
-        return new RuleDTO(path, Files.readString(Path.of(path)));
+        return new RuleDTO(path, Files.readString(Path.of(String.format("%s/%s", rulesPath, path))));
+    }
+
+    @Override
+    public void removeRule(String path) throws IOException, MavenInvocationException {
+        Files.delete(Path.of(String.format("%s/%s", rulesPath, path)));
+        invoker.execute(request);
     }
 
     @Override

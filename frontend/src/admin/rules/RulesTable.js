@@ -22,7 +22,7 @@ const RulesTable = (props) => {
 
   return (
     <>
-      <table className="table" style={{ minHeight: "650px", minWidth: "50vw" }}>
+      <table className="table is-fullwidth" style={{ minHeight: "650px", minWidth: "50vw" }}>
         <thead>
           <tr>
             <th>Path</th>
@@ -41,10 +41,7 @@ const RulesTable = (props) => {
                   <td>
                     <Link
                       className="button"
-                      to={{
-                        pathname: "/admin/rule",
-                        rule: rule,
-                      }}
+                      to={`/admin/rule?rule=${new URLSearchParams(rule.path).toString().substring(0, new URLSearchParams(rule.path).toString().length - 1)}`}
                     >
                       <span className="icon is-small">
                         <i class="fas fa-edit"></i>
@@ -54,7 +51,7 @@ const RulesTable = (props) => {
                   <td>
                     <button
                       className="button"
-                      onClick={() => props.delete(rule.id)}
+                      onClick={() => props.delete(`?rule=${new URLSearchParams(rule.path).toString().substring(0, new URLSearchParams(rule.path).toString().length - 1)}`, rule.path)}
                     >
                       <span className="icon is-small">
                         <i class="fas fa-backspace"></i>

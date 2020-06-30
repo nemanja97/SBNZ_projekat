@@ -57,4 +57,27 @@ public class RulesController {
     public ResponseEntity<List<RuleDTO>> getRules() {
         return new ResponseEntity<>(ruleService.getRules(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/rule", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<RuleDTO> getRule(@RequestParam String rule) {
+        try {
+            return new ResponseEntity<>(ruleService.getRule(rule), HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/rule", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<Object> deleteRule(@RequestParam String rule) {
+        try {
+            ruleService.removeRule(rule);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (MavenInvocationException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

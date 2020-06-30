@@ -11,7 +11,7 @@ const BasicRuleEdit = (props) => {
                 className="input"
                 type="text"
                 value={props.rule.path}
-                placeholder="Rule name"
+                placeholder="File name"
                 style={{ marginBottom: "10px" }}
                 onChange={props.inputChange("path")}
               />
