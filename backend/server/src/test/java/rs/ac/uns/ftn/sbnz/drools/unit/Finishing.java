@@ -34,20 +34,45 @@ public class Finishing {
         KieSession kieSession = kieContainer.getKieBase("KBase2").newKieSession();
         kieSession.getAgenda().getAgendaGroup(agenda).setFocus();
 
-        Property p = new Property();
-        p.setId(1L);
-        p.setCoordinate(new Coordinate(0.0, 0.0));
-        PropertyWithScore ps = new PropertyWithScore(p);
+        PropertyWithScore ps1 = new PropertyWithScore(new Property());
+        ps1.setScore(1);
+        ps1.getProperty().setId(1L);
+
+        PropertyWithScore ps2 = new PropertyWithScore(new Property());
+        ps2.setScore(3);
+        ps2.getProperty().setId(2L);
+
+        PropertyWithScore ps3 = new PropertyWithScore(new Property());
+        ps3.setScore(2);
+        ps3.getProperty().setId(3L);
+
+        PropertyWithScore ps4 = new PropertyWithScore(new Property());
+        ps4.setScore(4.2);
+        ps4.getProperty().setId(4L);
+
+        PropertyWithScore ps5 = new PropertyWithScore(new Property());
+        ps5.setScore(5.2);
+        ps5.getProperty().setId(5L);
+
         ScoredProperties scoredProperties = new ScoredProperties(Lists.emptyList());
 
         assertEquals(0, scoredProperties.getPropertyWithScores().size());
 
-        kieSession.insert(ps);
+        kieSession.insert(ps1);
+        kieSession.insert(ps2);
+        kieSession.insert(ps3);
+        kieSession.insert(ps4);
+        kieSession.insert(ps5);
+
         kieSession.insert(scoredProperties);
         System.out.println(kieSession.fireAllRules());
 
-        assertEquals(1, scoredProperties.getPropertyWithScores().size());
-        assertEquals(1L, scoredProperties.getPropertyWithScores().get(0).getProperty().getId());
+        assertEquals(5, scoredProperties.getPropertyWithScores().size());
+        assertEquals(5L, scoredProperties.getPropertyWithScores().get(0).getProperty().getId());
+        assertEquals(4L, scoredProperties.getPropertyWithScores().get(1).getProperty().getId());
+        assertEquals(2L, scoredProperties.getPropertyWithScores().get(2).getProperty().getId());
+        assertEquals(3L, scoredProperties.getPropertyWithScores().get(3).getProperty().getId());
+        assertEquals(1L, scoredProperties.getPropertyWithScores().get(4).getProperty().getId());
     }
 
 }

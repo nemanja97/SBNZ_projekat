@@ -81,7 +81,7 @@ public class PropertyServiceImpl implements PropertyService {
 
         kieSession.dispose();
 
-        scoredProperties.getPropertyWithScores().sort(PropertyWithScore::compareTo);
+//        scoredProperties.getPropertyWithScores().sort(PropertyWithScore::compareTo);
         scoredProperties.getPropertyWithScores().forEach(
                 ps -> System.out.println(ps.getScore()));
         return scoredProperties;
@@ -102,7 +102,6 @@ public class PropertyServiceImpl implements PropertyService {
         properties.forEach(kieSession::insert);
 
         System.out.println(kieSession.fireAllRules());
-        propertyRepository.save(property);
         kieSession.dispose();
 
         return property;

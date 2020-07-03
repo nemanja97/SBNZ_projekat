@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
         HeatingScore.class,
         OptimalPrice.class,
         PetScore.class,
-        Scaling.class
+        Scaling.class,
+        Reports.class
 })
 public class AllDroolsUnitTests {
 }

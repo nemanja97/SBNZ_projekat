@@ -7,4 +7,6 @@
 	</kbase>
 	<kbase name="KBase3" packages="optimalPrice">
 	</kbase>
+	<kbase name="KBase4" packages="reports">
+	</kbase>
 </kmodule>

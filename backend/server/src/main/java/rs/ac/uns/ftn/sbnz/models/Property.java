@@ -173,6 +173,14 @@ public class Property {
     	return this.coordinate.calculateDistance(other.getCoordinate());
 	}
 
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
 	@Override
 	public int hashCode() {
 		return super.hashCode();

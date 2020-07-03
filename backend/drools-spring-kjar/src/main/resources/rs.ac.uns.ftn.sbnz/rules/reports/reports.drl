@@ -1,0 +1,51 @@
+package rs.ac.uns.ftn.sbnz.rules.reports;
+
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyWithScore;
+import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
+import rs.ac.uns.ftn.sbnz.models.*;
+import rs.ac.uns.ftn.sbnz.models.Property;
+import rs.ac.uns.ftn.sbnz.models.PlaceOfInterest;
+import rs.ac.uns.ftn.sbnz.models.drools.SmartSearch;
+import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
+import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
+import rs.ac.uns.ftn.sbnz.models.drools.FinancialReport;
+import rs.ac.uns.ftn.sbnz.models.enums.Interest;
+import rs.ac.uns.ftn.sbnz.models.enums.Heating;
+import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
+import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
+import rs.ac.uns.ftn.sbnz.models.enums.PropertyStatus;
+
+import java.util.List;
+
+rule "Financial report"
+    agenda-group "reports"
+    no-loop
+    when
+        $report: FinancialReport(
+            $from: getFrom(),
+            $to: getTo()
+        )
+        $properties: List() from collect(
+            Property(status == PropertyStatus.SOLD,
+            modifiedDate after $from,
+            modifiedDate before $to)
+        )
+        accumulate(
+            Property($price: price) from $properties,
+		    $count: count($price),
+		    $sum: sum($price),
+		    $min: min($price),
+		    $max: max($price),
+		    $avg: average($price)
+        )
+    then
+        modify($report){
+            setAvgPrice($avg.doubleValue()),
+            setMaxPrice($max.doubleValue()),
+            setMinPrice($min.doubleValue()),
+            setTotalPrice($sum.doubleValue()),
+            setCount($count.intValue())
+        };
+        System.out.println($report);
+end

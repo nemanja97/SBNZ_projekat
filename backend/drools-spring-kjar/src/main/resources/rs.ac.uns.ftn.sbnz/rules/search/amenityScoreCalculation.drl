@@ -191,15 +191,3 @@ rule "Calculate amenity score - GATED" salience 1
         $ps.getScaler().getFiredRules().add("Calculate amenity score - GATED");
         update($ps);
 end
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// END RULE
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-rule "Calculate amenity score - END" salience -1
-    enabled false
-    agenda-group "amenity_score_calculation"
-    when
-    then
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("distance_score_calculation").setFocus();
-end

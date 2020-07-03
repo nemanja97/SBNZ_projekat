@@ -147,15 +147,3 @@ rule "Calculate heating score - RADIANT" salience 1
         $ps.getScaler().getFiredRules().add("Calculate heating score - RADIANT");
         update($ps);
 end
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// END RULE
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-rule "Calculate heating score - END" salience -1
-    enabled false
-    agenda-group "heating_score_calculation"
-    when
-    then
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("pet_score_calculation").setFocus();
-end

@@ -15,15 +15,20 @@ import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
 import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
 
 import java.util.List;
+import java.util.ArrayList;
 
-rule "Add to return list" salience 0
-    no-loop
-    agenda-group "finishing"
+rule "Add to return list"
+salience $score
+agenda-group "finishing"
+no-loop
     when
-        $ps: PropertyWithScore();
+        $ps: PropertyWithScore($score: score);
         $sp: ScoredProperties();
     then
-        System.out.println(String.format("Adding: %s", $ps.getProperty().getId()));
-        $sp.getPropertyWithScores().add($ps);
-        update($sp);
+        System.out.println(String.format("Adding: %s with score %s", $ps.getProperty().getId(), $ps.getScore()));
+        List<PropertyWithScore> appendedList = new ArrayList<PropertyWithScore>($sp.getPropertyWithScores());
+        appendedList.add($ps);
+
+        $sp.setPropertyWithScores(appendedList);
+        update($sp)
 end
