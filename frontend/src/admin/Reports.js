@@ -99,10 +99,10 @@ function Reports() {
                           <small>{report.totalPrice}</small>
                           <br />
                           <strong>Minimum price:</strong>{" "}
-                          <small>{report.avgPrice}</small>
+                          <small>{report.minPrice}</small>
                           <br />
                           <strong>Average price:</strong>{" "}
-                          <small>{report.minPrice}</small>
+                          <small>{report.avgPrice}</small>
                           <br />
                           <strong>Maximum price:</strong>{" "}
                           <small>{report.maxPrice}</small>

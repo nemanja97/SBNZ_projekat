@@ -166,9 +166,13 @@ export default function Result(props) {
                       <div className="control">
                         <button key={idx} className={"button is-primary"}>
                           {a === "ELEVATOR" ? "Elevator" : undefined}
-                          {a === "AIR_CONDITIONING" ? "Air conditioning" : undefined}
+                          {a === "AIR_CONDITIONING"
+                            ? "Air conditioning"
+                            : undefined}
                           {a === "CABLE_READY" ? "Cable ready" : undefined}
-                          {a === "HIGH_SPEED_INTERNET_ACCESS" ? "High speed internet" : undefined}
+                          {a === "HIGH_SPEED_INTERNET_ACCESS"
+                            ? "High speed internet"
+                            : undefined}
                           {a === "SWIMMING_POOL" ? "Swimming pool" : undefined}
                           {a === "GARAGE" ? "Garage" : undefined}
                           {a === "SECURITY" ? "On site security" : undefined}
@@ -181,6 +185,14 @@ export default function Result(props) {
             </div>
           </div>
         </div>
+
+        <button
+          style={{ marginTop: 10 }}
+          onClick={() => props.handleMoreInfoClick(props.property.id)}
+          className="button is-fullwidth"
+        >
+          More info
+        </button>
       </div>
     </>
   );

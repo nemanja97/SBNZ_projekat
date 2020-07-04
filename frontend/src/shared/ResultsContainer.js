@@ -13,7 +13,7 @@ export default function ResultsContainer(props) {
       {props.properties &&
         props.properties.map((p, idx) => {
           if (props.page.value === idx)
-            return <Result property={p} key={p.id} />;
+            return <Result property={p} key={p.id} handleMoreInfoClick={props.handleMoreInfoClick} />;
         })}
       <nav
         className="pagination is-rounded is-centered is-medium"
