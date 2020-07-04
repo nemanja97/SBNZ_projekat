@@ -12,10 +12,7 @@ import rs.ac.uns.ftn.sbnz.repository.PropertyRepository;
 import rs.ac.uns.ftn.sbnz.service.PlaceOfInterestService;
 import rs.ac.uns.ftn.sbnz.service.PropertyService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PropertyServiceImpl implements PropertyService {
@@ -36,6 +33,8 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public void addProperty(Property property) {
         property.setStatus(PropertyStatus.FOR_SALE);
+        property.setCreationDate(new Date());
+        property.setModifiedDate(new Date());
         propertyRepository.save(property);
     }
 
@@ -61,30 +60,16 @@ public class PropertyServiceImpl implements PropertyService {
         kieSession.insert(scoredProperties);
         kieSession.insert(smartSearch);
 
+        kieSession.getAgenda().getAgendaGroup("finishing").setFocus();
+        kieSession.getAgenda().getAgendaGroup("pet_score_calculation").setFocus();
+        kieSession.getAgenda().getAgendaGroup("heating_score_calculation").setFocus();
+        kieSession.getAgenda().getAgendaGroup("distance_score_calculation").setFocus();
+        kieSession.getAgenda().getAgendaGroup("amenity_score_calculation").setFocus();
+        kieSession.getAgenda().getAgendaGroup("scaling").setFocus();
         kieSession.getAgenda().getAgendaGroup("filtering").setFocus();
         System.out.println(kieSession.fireAllRules());
-
-        kieSession.getAgenda().getAgendaGroup("scaling").setFocus();
-        System.out.println(kieSession.fireAllRules());
-
-        kieSession.getAgenda().getAgendaGroup("amenity_score_calculation").setFocus();
-        System.out.println(kieSession.fireAllRules());
-
-        kieSession.getAgenda().getAgendaGroup("distance_score_calculation").setFocus();
-        System.out.println(kieSession.fireAllRules());
-
-        kieSession.getAgenda().getAgendaGroup("heating_score_calculation").setFocus();
-        System.out.println(kieSession.fireAllRules());
-
-        kieSession.getAgenda().getAgendaGroup("pet_score_calculation").setFocus();
-        System.out.println(kieSession.fireAllRules());
-
-        kieSession.getAgenda().getAgendaGroup("finishing").setFocus();
-        System.out.println(kieSession.fireAllRules());
-
         kieSession.dispose();
 
-//        scoredProperties.getPropertyWithScores().sort(PropertyWithScore::compareTo);
         scoredProperties.getPropertyWithScores().forEach(
                 ps -> System.out.println(ps.getScore()));
         return scoredProperties;
@@ -133,6 +118,7 @@ public class PropertyServiceImpl implements PropertyService {
             oldProperty.setAllowedPets(property.getAllowedPets());
             oldProperty.setAmenities(property.getAmenities());
             oldProperty.setPriceRecommendation(property.getPriceRecommendation());
+            oldProperty.setModifiedDate(new Date());
             propertyRepository.save(oldProperty);
         } else {
             throw new PropertyNotFoundException();

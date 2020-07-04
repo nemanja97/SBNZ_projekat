@@ -12,9 +12,10 @@ import Dashboard from "./admin/Dashboard";
 import Login from "./shared/Login";
 import RulesDashboard from "./admin/RulesDashboard";
 import Rule from "./admin/rules/Rule";
-import 'react-widgets/dist/css/react-widgets.css';
+import "react-widgets/dist/css/react-widgets.css";
 import "./index.scss";
 import Property from "./admin/Property";
+import Reports from "./admin/Reports";
 
 function App() {
   return (
@@ -49,6 +50,12 @@ function App() {
           exact
           path="/admin/rule"
           component={Rule}
+          roles={["ROLE_ADMIN"]}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/reports"
+          component={Reports}
           roles={["ROLE_ADMIN"]}
         />
         <Route path="/home" component={HomePage} />

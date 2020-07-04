@@ -21,6 +21,9 @@ export default function AdminNavbar() {
           <Link className="navbar-item" to="/admin/rules">
             Modify rules
           </Link>
+          <Link className="navbar-item" to="/admin/reports">
+            Reports
+          </Link>
         </div>
 
         <div className="navbar-end">
