@@ -12,6 +12,9 @@ import Dashboard from "./admin/Dashboard";
 import Login from "./shared/Login";
 import RulesDashboard from "./admin/RulesDashboard";
 import Rule from "./admin/rules/Rule";
+import 'react-widgets/dist/css/react-widgets.css';
+import "./index.scss";
+import Property from "./admin/Property";
 
 function App() {
   return (
@@ -26,14 +29,14 @@ function App() {
         />
         <PrivateRoute
           exact
-          path="/admin/add"
-          component={Dashboard}
+          path="/admin/property"
+          component={Property}
           roles={["ROLE_ADMIN"]}
         />
         <PrivateRoute
           exact
-          path="/admin/edit/:id"
-          component={Dashboard}
+          path="/admin/property/:id"
+          component={Property}
           roles={["ROLE_ADMIN"]}
         />
         <PrivateRoute

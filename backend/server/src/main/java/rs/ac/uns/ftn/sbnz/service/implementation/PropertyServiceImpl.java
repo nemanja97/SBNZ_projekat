@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.sbnz.exception.PropertyNotFoundException;
 import rs.ac.uns.ftn.sbnz.models.*;
 import rs.ac.uns.ftn.sbnz.models.drools.*;
-import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
-import rs.ac.uns.ftn.sbnz.models.enums.Heating;
-import rs.ac.uns.ftn.sbnz.models.enums.Interest;
-import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.*;
 import rs.ac.uns.ftn.sbnz.repository.PropertyRepository;
 import rs.ac.uns.ftn.sbnz.service.PlaceOfInterestService;
 import rs.ac.uns.ftn.sbnz.service.PropertyService;
@@ -38,6 +35,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public void addProperty(Property property) {
+        property.setStatus(PropertyStatus.FOR_SALE);
         propertyRepository.save(property);
     }
 
@@ -47,8 +45,13 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public List<Property> getProperties(PropertyStatus status) {
+        return propertyRepository.findAllByStatus(status);
+    }
+
+    @Override
     public ScoredProperties getOptimalProperties(SmartSearch smartSearch) {
-        List<Property> properties = this.getProperties();
+        List<Property> properties = this.getProperties(PropertyStatus.FOR_SALE);
         List<PlaceOfInterest> placesOfInterest = placeOfInterestService.getPlacesOfInterest();
         ScoredProperties scoredProperties = new ScoredProperties(new ArrayList<>());
 
@@ -101,9 +104,12 @@ public class PropertyServiceImpl implements PropertyService {
         kieSession.insert(property);
         properties.forEach(kieSession::insert);
 
-        System.out.println(kieSession.fireAllRules());
+        int firedRules = kieSession.fireAllRules();
+        System.out.println(firedRules);
         kieSession.dispose();
 
+        if (firedRules == 0)
+            return null;
         return property;
     }
 

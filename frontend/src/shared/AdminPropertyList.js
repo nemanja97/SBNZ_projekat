@@ -7,7 +7,7 @@ function AdminPropertyList(props) {
       {props.properties &&
         props.properties.map((property) => {
           return (
-            <AdminPropertyBox property={property}/>
+            <AdminPropertyBox property={property} edit={props.edit}/>
           );
         })}
     </>

@@ -3,27 +3,37 @@ import React from "react";
 function AdminPropertyBox(props) {
   return (
     <>
-      <div class="box">
-        <article class="media">
-          <div class="media-left">
-            <figure class="image is-64x64">
+      <div className="box">
+        <article className="media">
+          <div className="media-left">
+            <figure className="image is-64x64">
               <img src="https://bulma.io/images/placeholders/128x128.png" />
-              <button style={{ width: "100%" }} className="button">
+              <button
+                style={{ width: "100%" }}
+                className="button"
+                onClick={() => props.edit(props.property.id)}
+              >
                 Edit
               </button>
             </figure>
           </div>
-          <div class="media-content">
-            <div class="content">
+          <div className="media-content">
+            <div className="content">
               <p>
                 <strong>Price: {props.property.price}EUR</strong>{" "}
-                {props.property.priceRecommendation == "LOWER" && (
-                  <span class="tag is-warning">
+                {props.property.status == "SOLD" && (
+                  <span className="tag is-info">Sold</span>
+                )}
+                {props.property.status == "TAKEN_DOWN" && (
+                  <span className="tag is-danger">Taken down</span>
+                )}
+                {props.property.status == "FOR_SALE" && props.property.priceRecommendation == "LOWER" && (
+                  <span className="tag is-warning">
                     Low interest in property, consider decreasing the price
                   </span>
                 )}
-                {props.property.priceRecommendation == "HIGHER" && (
-                  <span class="tag is-success">
+                {props.property.status == "FOR_SALE" && props.property.priceRecommendation == "HIGHER" && (
+                  <span className="tag is-success">
                     High interest in property, consider increasing the price
                   </span>
                 )}

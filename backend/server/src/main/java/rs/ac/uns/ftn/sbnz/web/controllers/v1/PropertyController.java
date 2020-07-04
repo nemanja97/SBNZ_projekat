@@ -96,6 +96,8 @@ public class PropertyController {
         Property property = propertyDTO.convertToEntity();
         property = propertyService.recommend(property);
 
+        if (property == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(new PropertyDTO(property), HttpStatus.OK);
     }
 

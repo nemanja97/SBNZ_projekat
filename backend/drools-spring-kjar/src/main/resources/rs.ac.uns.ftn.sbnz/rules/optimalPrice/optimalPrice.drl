@@ -47,6 +47,7 @@ rule "Determine price" salience 0
     agenda-group "recommend"
     when
         $filteredList: List()
+        eval($filteredList.size() > 0)
         $average : Number() from accumulate(
             Property($price: price) from $filteredList,
             average($price)
