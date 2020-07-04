@@ -16,11 +16,13 @@ import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
 import rs.ac.uns.ftn.sbnz.models.enums.TypeOfPlace;
 import rs.ac.uns.ftn.sbnz.models.enums.PropertyStatus;
 
-import java.util.List;
+import java.util.Date;
+import java.util.List
+import java.util.ArrayList;
 
-rule "Financial report"
+rule "Financial report - basic information" salience 1
     agenda-group "reports"
-    no-loop
+    lock-on-active
     when
         $report: FinancialReport(
             $from: getFrom(),
@@ -48,4 +50,27 @@ rule "Financial report"
             setCount($count.intValue())
         };
         System.out.println($report);
+end
+
+rule "Financial report - properties" salience (-$dateModified.getTime() / 1000)
+    agenda-group "reports"
+    lock-on-active
+    when
+        $report: FinancialReport(
+            $from: getFrom(),
+            $to: getTo()
+        )
+        $property: Property(
+            status == PropertyStatus.SOLD,
+            modifiedDate after $from,
+            modifiedDate before $to,
+            $dateModified: modifiedDate
+        )
+    then
+        System.out.println($property);
+        List<Property> appendedList = new ArrayList<Property>($report.getPropertyList());
+        appendedList.add($property);
+        modify($report){
+            setPropertyList(appendedList)
+        }
 end

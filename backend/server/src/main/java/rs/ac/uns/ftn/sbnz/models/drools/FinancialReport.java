@@ -1,6 +1,10 @@
 package rs.ac.uns.ftn.sbnz.models.drools;
 
+import rs.ac.uns.ftn.sbnz.models.Property;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class FinancialReport {
 
@@ -11,13 +15,15 @@ public class FinancialReport {
     private double avgPrice;
     private Date from;
     private Date to;
+    private List<Property> propertyList;
 
     public FinancialReport(Date from, Date to) {
         this.from = from;
         this.to = to;
+        this.propertyList = new ArrayList<>();
     }
 
-    public FinancialReport(int count, double totalPrice, double minPrice, double maxPrice, double avgPrice, Date from, Date to) {
+    public FinancialReport(int count, double totalPrice, double minPrice, double maxPrice, double avgPrice, Date from, Date to, List<Property> propertyList) {
         this.count = count;
         this.totalPrice = totalPrice;
         this.minPrice = minPrice;
@@ -25,6 +31,7 @@ public class FinancialReport {
         this.avgPrice = avgPrice;
         this.from = from;
         this.to = to;
+        this.propertyList = propertyList;
     }
 
     public int getCount() {
@@ -83,6 +90,14 @@ public class FinancialReport {
         this.to = to;
     }
 
+    public List<Property> getPropertyList() {
+        return propertyList;
+    }
+
+    public void setPropertyList(List<Property> propertyList) {
+        this.propertyList = propertyList;
+    }
+
     @Override
     public String toString() {
         return "FinancialReport{" +
@@ -93,6 +108,7 @@ public class FinancialReport {
                 ", avgPrice=" + avgPrice +
                 ", from=" + from +
                 ", to=" + to +
+                ", propertyList=" + propertyList +
                 '}';
     }
 }

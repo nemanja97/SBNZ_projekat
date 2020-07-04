@@ -69,5 +69,8 @@ public class Reports {
         assertEquals(1000, financialReport.getMinPrice());
         assertEquals(5000, financialReport.getMaxPrice());
         assertEquals((p1.getPrice() + p2.getPrice() + p3.getPrice()) / 3.0, financialReport.getAvgPrice());
+        assertEquals(simpleDateFormat.parse("05.01.2020"), financialReport.getPropertyList().get(0).getModifiedDate());
+        assertEquals(simpleDateFormat.parse("10.01.2020"), financialReport.getPropertyList().get(1).getModifiedDate());
+        assertEquals(simpleDateFormat.parse("15.01.2020"), financialReport.getPropertyList().get(2).getModifiedDate());
     }
 }
