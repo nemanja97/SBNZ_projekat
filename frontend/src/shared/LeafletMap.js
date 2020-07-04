@@ -59,8 +59,9 @@ export default function LeafletMap(props) {
                               <br />
                               Bathrooms: {p.numberOfBathrooms}
                               <br />
-                              Find out more info{" "}
-                              <Link to={"/" + p.id}>here.</Link>
+                              <button style={{marginTop: 10}} onClick={() => props.handleMoreInfoClick(p.id)} className="button is-fullwidth">
+                                More info
+                              </button>
                             </p>
                           </div>
                         </div>

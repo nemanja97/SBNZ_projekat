@@ -4,7 +4,8 @@ import Filters from "../shared/Filters";
 import { PropertyService } from "../services/PropertyService";
 import { PlacesOfInterestService } from "../services/PlacesOfInterestService";
 import LeafletMap from "../shared/LeafletMap";
-import qs from "querystring"
+import qs from "querystring";
+import { AnalyticsService } from "../services/AnalyticsService";
 
 function HomePage() {
   const [map, setMap] = useState({
@@ -13,28 +14,28 @@ function HomePage() {
     zoom: 13,
   });
 
-  const [properties, setProperties] = useState()
+  const [properties, setProperties] = useState();
 
-  const [placesOfInterest, setPlacesOfInterest] = useState()
+  const [placesOfInterest, setPlacesOfInterest] = useState();
 
   const [propertyFilters, setPropertyFilters] = useState({
-    priceLow: '',
-    priceHigh: '',
-    sizeLow: '',
-    sizeHigh: '',
-    bedsLow: '',
-    bedsHigh: '',
-    bathroomsLow: '',
-    bathroomsHigh: '',
+    priceLow: "",
+    priceHigh: "",
+    sizeLow: "",
+    sizeHigh: "",
+    bedsLow: "",
+    bedsHigh: "",
+    bathroomsLow: "",
+    bathroomsHigh: "",
     heating: [],
     pets: [],
     amenities: [],
   });
 
   const [personalFilters, setPersonalFilters] = useState({
-    youngerOccupants: '',
-    middleAgedOccupants: '',
-    olderOccupants: '',
+    youngerOccupants: "",
+    middleAgedOccupants: "",
+    olderOccupants: "",
     expectingChildren: undefined,
     hasVehicle: undefined,
     interests: [],
@@ -45,13 +46,13 @@ function HomePage() {
     const smartSearch = {
       ...propertyFilters,
       ...personalFilters,
-    }
-    window.open("/results?" + qs.stringify(smartSearch), '_blank')
+    };
+    window.open("/results?" + qs.stringify(smartSearch), "_blank");
   };
 
   useEffect(() => {
     async function fetchProperties() {
-      const response = await PropertyService.getAll();
+      const response = await PropertyService.getAll("FOR_SALE");
       setProperties(response.data);
     }
     async function fetchPlacesOfInterest() {
@@ -61,7 +62,11 @@ function HomePage() {
 
     fetchProperties();
     fetchPlacesOfInterest();
-  }, [])
+  }, []);
+
+  const handleMoreInfoClick = async (id) => {
+    await AnalyticsService.moreInfoClick(id);
+  };
 
   return (
     <>
@@ -82,10 +87,8 @@ function HomePage() {
           <Filters
             propertyFilters={propertyFilters}
             handlePropertyFiltersChange={setPropertyFilters}
-
             personalFilters={personalFilters}
             handlePersonalFiltersChange={setPersonalFilters}
-
             handleSearch={handleSearch}
           />
         </div>
@@ -98,12 +101,12 @@ function HomePage() {
           <LeafletMap
             map={map}
             handleMapChange={setMap}
-            
+            handleMoreInfoClick={handleMoreInfoClick}
             properties={properties}
             handlePropertiesChange={setProperties}
-            
             placesOfInterest={placesOfInterest}
-            handleplacesOfInterestChange={setPlacesOfInterest}/>
+            handleplacesOfInterestChange={setPlacesOfInterest}
+          />
         </div>
       </div>
     </>

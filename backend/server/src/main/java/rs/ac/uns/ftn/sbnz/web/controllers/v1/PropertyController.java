@@ -15,10 +15,7 @@ import rs.ac.uns.ftn.sbnz.models.drools.PersonalInformation;
 import rs.ac.uns.ftn.sbnz.models.drools.PropertyInformation;
 import rs.ac.uns.ftn.sbnz.models.drools.ScoredProperties;
 import rs.ac.uns.ftn.sbnz.models.drools.SmartSearch;
-import rs.ac.uns.ftn.sbnz.models.enums.Amenity;
-import rs.ac.uns.ftn.sbnz.models.enums.Heating;
-import rs.ac.uns.ftn.sbnz.models.enums.Interest;
-import rs.ac.uns.ftn.sbnz.models.enums.PetStatus;
+import rs.ac.uns.ftn.sbnz.models.enums.*;
 import rs.ac.uns.ftn.sbnz.service.FileStorageService;
 import rs.ac.uns.ftn.sbnz.service.MultimediaFileService;
 import rs.ac.uns.ftn.sbnz.service.PropertyService;
@@ -49,8 +46,13 @@ public class PropertyController {
     private MultimediaFileService multimediaFileService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<PropertyDTO>> getProperties() {
-        List<Property> properties = propertyService.getProperties();
+    public ResponseEntity<List<PropertyDTO>> getProperties(@RequestParam(required = false) PropertyStatus status) {
+        List<Property> properties;
+        if (status != null)
+            properties = propertyService.getProperties(status);
+        else
+            properties = propertyService.getProperties();
+
         List<PropertyDTO> propertyDTOS = properties.stream().map(PropertyDTO::new).collect(Collectors.toList());
 
         return new ResponseEntity<>(propertyDTOS, HttpStatus.OK);

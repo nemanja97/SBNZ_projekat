@@ -9,7 +9,9 @@ export const PropertyService = {
   findOptimal,
 };
 
-async function getAll() {
+async function getAll(status) {
+  if (status)
+    return await axios.get(`${process.env.REACT_APP_API_URL}/v1/properties?status=${status}`);
   return await axios.get(`${process.env.REACT_APP_API_URL}/v1/properties`);
 }
 

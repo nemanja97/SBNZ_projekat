@@ -13,6 +13,6 @@ export async function _login (credentials) {
     return await axios.post(`${process.env.REACT_APP_API_URL}/v1/auth`, data)
 }
 
-function _logout() {
+export function _logout() {
     removeToken();
 }

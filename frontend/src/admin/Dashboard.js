@@ -22,8 +22,14 @@ function Dashboard() {
     <>
       <AdminNavbar />
       <div className="container">
-        <AdminPropertyList properties={properties} edit={(id) => {history.push(`/admin/property/${id}`)}} />
+        <AdminPropertyList
+          properties={properties}
+          edit={(id) => {
+            history.push(`/admin/property/${id}`);
+          }}
+        />
         <button
+          style={{ marginBottom: 10 }}
           className="button is-fullwidth is-primary"
           onClick={() => history.push(`/admin/property`)}
         >

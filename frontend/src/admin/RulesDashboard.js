@@ -31,6 +31,7 @@ function RulesDashboard() {
         <RulesTable rules={rules} delete={handleDelete} />
         <button
           class="button is-fullwidth is-primary"
+          style={{ marginBottom: 10 }}
           onClick={() => history.push(`/admin/rule`)}
         >
           Create new rule

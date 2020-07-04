@@ -6,6 +6,7 @@ import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.sbnz.models.Property;
 import rs.ac.uns.ftn.sbnz.models.drools.events.MoreInfoClickedEvent;
+import rs.ac.uns.ftn.sbnz.models.enums.PropertyStatus;
 import rs.ac.uns.ftn.sbnz.repository.PropertyRepository;
 import rs.ac.uns.ftn.sbnz.service.AnalyticsService;
 import rs.ac.uns.ftn.sbnz.service.PropertyService;
@@ -43,7 +44,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     @Override
     public int getPriceAdvice() {
         List<FactHandle> factHandles = new ArrayList<>();
-        List<Property> properties = propertyService.getProperties();
+        List<Property> properties = propertyService.getProperties(PropertyStatus.FOR_SALE);
         properties.forEach(p -> factHandles.add(analyticsSession.insert(p)));
 
         int fired = analyticsSession.fireAllRules();
